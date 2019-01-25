@@ -1,0 +1,15 @@
+<tr class="m-join-item">
+	<td class="col-img"><a href="{{url_for('user_home',uid=zj_user_join_record.owner.id)}}"><img src="{{zj_user_join_record.owner.avatar}}"></a></td>
+	<td class="join-detail">
+		<span>获奖者: </span>
+		<a href="{{url_for('user_home',uid=zj_user_join_record.owner.id)}}" class="link-color">{{zj_user_join_record.owner.name}}</a>
+		<a class="view-num link-color" href="javascript:void(0);" data-zj="{{period.kj_num}}" data-num="{{zj_user_join_record.num}}">查看号码</a>
+		<div class="user-id">
+			<span><span class="describe-info">用户ID: </span>{{zj_user_join_record.owner.display_id}}(唯一不变的标识)</span>
+		</div>
+		<div class="join-info clearfix">
+			<span>参与了<strong>{{zj_user_join_record.count}}</strong>人次</span>
+			<span class="describe-info pull-right">{{zj_user_join_record.created_datetime}}</span>
+		</div>
+	</td>
+</tr>

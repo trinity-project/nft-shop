@@ -1,0 +1,83 @@
+<div class="col-md-3 col-sm-4 col-xs-6 product-container">
+	{% set property_dict = item.parse_property() %}
+	<div class="product-item order-infos">
+		<div class="img-link row">
+
+				{% if time - item.created_at.strftime("%Y%m%d")|int > 2 %}
+				<span class="new" hidden>111</span>
+				{% else %}
+				<span class="new">NEW</span>
+				{% endif %}
+
+			<!-- <a target="_blank" href="javascript:;"> -->
+				<img src="{{property_dict.get('imgUrl', 'http://placehold.it/150x150')}}">
+			<!-- </a> -->
+		</div>
+		<div class="message">
+			<!-- 角色名称 -->
+			<div class="item-title">
+				<a target="_blank" href="javascript:;" data-language="list_item_lg_1" >
+				{% if g.lang == "en" %}
+				{{ property_dict.get("name", item.desc) }}
+				{% elif g.lang == "cn" %}
+				{{ property_dict.get("name-zh", item.desc) }}
+				{% endif %}
+				</a>
+			</div>
+			<!-- 这里是属性描述 -->
+			<div style="height: 19px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+				{% if g.lang == "en" %}
+					{% if property_dict.get("function", item.desc) == None %}
+					...
+					{% else %}
+					{{ property_dict.get("function", item.desc) }}
+					{% endif %}
+				{% elif g.lang == "cn" %}
+					{% if property_dict.get("function-zh", item.desc) == None %}
+					...
+					{% else %}
+					{{ property_dict.get("function-zh", item.desc) }}
+					{% endif %}
+				{% endif %}
+			</div>
+			<!-- 投放时间：5天 -->
+			<div class="sell-info describe-info" hidden id="lautim">{{ item.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</div>
+			<div class="sell-progress hidden">
+				<span class="orange" style="width: 60%"></span>
+			</div>
+			<div class="join-info describe-info clearfix">
+				<!-- 售价 -->
+				<span id="price">
+				{% if g.lang == "en" %}
+				Price:
+				{% else %}
+				价格：
+				{% endif %}
+				{{ "%.2f"|format(item.price) }}{{ item.price_unit }}</span>
+				<!-- 剩余 -->
+				<!-- <span class="pull-right" id="surpl">Surplus：2 days</span> -->
+			</div>
+			<form style="border-radius: 20px;">
+				<div class="join-box text-center hidden">
+						<div id="infos" class="join-select text-center">
+							<input type="hidden" value="{{ item.id }}">
+							<input type="hidden" value="{% if g.lang == 'en' %}{{ property_dict.get('name',item.desc) }}{% else %}{{ property_dict.get('name-zh',item.desc) }}{% endif %}">
+							<input type="hidden" value="{{ item.seller }}">
+							{% if g.lang == "cn" %}
+							<input type="hidden" value="{% if item.commodity_type == 1 %}nft商品{% else %}道具商品{% endif %}" >
+							{% else %}
+							<input type="hidden" value="{% if item.commodity_type == 1 %}nft commodity{% else %}prop commodity{% endif %}" >
+							{% endif %}
+							<input type="hidden" value="{{ item.price }}">
+							<input type="hidden" value="{{ item.price_unit }}">
+							<input type="hidden" value="{{ page }}">
+							<input type="hidden" value="{% if g.lang == 'en' %}{{ property_dict.get('function',item.desc) }}{% else %}{{ property_dict.get('function-zh',item.desc) }}{% endif %}">
+							<input type="hidden" value="{{ item.prop.amount }}">
+						</div>
+					<!-- <button type="submit" class="order-infos btn" data-language="list_item_lg_2" style="width: 82px;height: 33px;border-color:#4cae4c ;background-color:#5cb85c;color: #fff;">BuyNow</button> -->
+					<a href="javascript:void(0);" class="order-infos btn" style="width: 82px;height: 33px;border-color:#4cae4c ;background-color:#5cb85c;color: #fff;">BuyNow</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

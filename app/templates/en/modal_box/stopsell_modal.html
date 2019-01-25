@@ -1,0 +1,29 @@
+{#停止挂售模态框模型#}
+<div class="modal fade" id="option-modal-3" role="dialog" >
+  	<div class="modal-dialog">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="mod_3_ha">Sell Stop</h4>
+			</div>
+			<div class="modal-body">
+				<div class="asset-info">
+					<div>Commodity Type：<span class="asset-type"></span></div>
+					<div>Selling Price：<span class="asste-price"></span></div>
+					<div>Shelf Time：<span class="asste-time"></span></div>
+				</div>
+				<form action="/stopsell" method="post">
+					<input type="" name="asste_id" class="asste-id" hidden>
+					<input type="" name="page" class="page-num" hidden>
+					<div class="form-group">
+						<label>Please enter 6 bit of pay-password to verify</label>
+						<input class="form-control" type="password" name="pay_pwd">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-my form-control" id="mod_3_con">Sell Stop</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

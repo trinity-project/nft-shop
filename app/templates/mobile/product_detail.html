@@ -1,0 +1,10 @@
+{% extends 'mobile/m_base.html' %}
+{% block side_menu %}
+<ul class="m-side-menu">
+    <li><a href="{{url_for('home')}}"><span class="glyphicon glyphicon-home"></span></a></li>
+    <li><a href="{{url_for('my_home')}}"><span class="glyphicon glyphicon-user"></span></a></li>
+</ul>
+{% endblock %}
+{% block content %}
+<div class="product-detail">{{product.content | safe}}</div>
+{% endblock %}

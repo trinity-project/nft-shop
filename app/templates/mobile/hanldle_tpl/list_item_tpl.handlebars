@@ -1,0 +1,19 @@
+{{#each data}}
+<div class="col-md-3 col-sm-4 col-xs-6 fix-padding">
+	<div class="product-item">
+		<div class="img-link">
+			<a target="_blank" href="/shop/{{this.id}}"><img src="{{this.product.thumbnail}}"></a>
+		</div>
+		<div class="item-title"><a target="_blank" href="/shop/{{this.id}}">{{this.product.title}}</a></div>
+		<div class="text-right describe-info">
+			<span class="">剩余{{this.left}}人次</span>
+		</div>
+		<div class="sell-progress">
+			<span class="orange" style="width:{{this.pecent}}%"></span>
+		</div>
+		<div class="join-info text-center ">
+			<a class="db-btn" href="/shop/{{this.id}}">立即参加</a>
+		</div>
+	</div>
+</div>
+{{/each}}

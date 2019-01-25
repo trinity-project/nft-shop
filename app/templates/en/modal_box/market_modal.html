@@ -1,0 +1,44 @@
+<!-- order-infos -->
+{#订单模态框模型#}
+<div class="modal fade" id="order-modal" role="dialog" >
+  	<div class="modal-dialog">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="mod_3_ha">Please Confirm the Order</h4>
+			</div>
+			<div class="modal-body">
+				<form action="/order/confirm" method="post">
+					<div class="referral">
+						<div>Commodity Name：<span class="commodity_name" name="name"></span></div>
+						<div>Seller：<span class="commodity_seller"></span></div>
+						<div>Describe：<span class="commodity_desc"></span></div>
+						<div> Type：<span class="commodity_type"></span></div>
+						<div>Total Consumption：<span class="commodity_price"></span><span class="commodity_uint"></span></div>
+					</div>
+					<div class="quantity">
+						Quantity：
+						<!-- <div style="display:inline-block;float: right;">Inventory quantity：<span class="prop_num"></span></div> -->
+						<!-- <span class="subBtn">-</span> -->
+						<input class="inputNum form-control" type="text" maxlength="2"  onkeyup="value=value.replace(/[^\d]/g,'')" value="1" name="quantity">
+						<!-- <span class="addBtn">+</span> -->
+					</div>
+					<input type="hidden" id="id" name="id" class="commodity_id">
+					<input type="hidden" id="sell" name="sell" class="commodity_seller">
+					<input type="hidden" id="name" name="name" class="commodity_name">
+					<input type="hidden" id="price" name="price" class="commodity_price">
+					<input type="hidden" id="uint" name="uint" class="commodity_uint">
+					<input type="hidden" id="type" name="type" class="commodity_type">
+					<input type="hidden" id="page" name="page" class="page">
+					<div class="form-group">
+						<label>Please enter 6-digit pay-password to verify</label>
+						<input class="form-control" type="password" name="pay_pwd">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-my form-control" id="mod_3_con">Buy</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

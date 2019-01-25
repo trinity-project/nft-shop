@@ -1,0 +1,56 @@
+<div class="m-coupons fix-fixed">
+	<div class="user-head-tips">
+		<span>我的兑换券</span>
+	</div>
+	<div style="font-size:12px; padding: 0 5px">
+		<div style="font-weight: bold;">什么是兑换券</div>
+		<div style="padding-left:20px;">
+			<span>参与合作商家商品夺宝中奖后,会得到一张相应的兑换券,可用于去合作商家兑换相应的商品或服务</span>
+		</div>
+		<div class="text-center red-color">温馨提示: 请勿泄露兑换券的卡号和秘密</div>
+	</div>
+	<ul class="coupon-list excoupon-list list-container" data-uid="{{user.id}}">
+		{% for ticket in tickets %}
+		<li class="coupon {% if ticket.user %}used{% endif %}" name="兑换券">
+			<div class="clearfix">
+				<div class="left pull-left">
+					<span>{{ticket.period.product}} 第{{ticket.period.number}}期</span>
+				</div>
+				<div class="sell-name pull-right">{{ticket.period.product.seller.name}}</div>
+			</div>
+			<div class="product-name text-center">可兑{{ticket.period.product}}</div>
+			<div class="coupon-account">
+				<span class="code">卡号: {{ticket.code}}</span>
+				<span class="password">密码: {{ticket.password}}</span>
+			</div>
+			{% if ticket.user %}
+			<span class="pull-right">于{{ticket.used_datetime.strftime('%Y-%m-%d %H:%M:%S')}}使用</span>
+			{% endif %}
+			<div></div>
+		</li>
+		{% endfor %}
+	</ul>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('home')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('my_home')}}">
+					<div><span class="glyphicon glyphicon-user"></span></div>
+					<span>我的夺宝</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+</div>

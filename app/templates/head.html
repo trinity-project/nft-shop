@@ -1,0 +1,117 @@
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8 ]>        <html class="ie"> <![endif]-->
+<!--[if !(IE)]><!--> <!-- <html> --> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>{{ title| default("NFT 商城") }}</title>
+    <!--SEO Meta Tags-->
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="pB7tJnTtJw" />
+    <meta name="msvalidate.01" content="32BA028BEED54DD57334821881D43E0B" />
+    <meta name="sogou_site_verification" content="IEu511kbSj" />
+    <meta name="360-site-verification" content="9fbc6455d7f768cdede4d786d6c9b594" />
+    <meta name="google-site-verification" content="n8wmw36sXzHKsDVYR2sqRGVNkaF8dfxItY-KyqjgnIA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!--qq connection 验证-->
+    <meta property="qc:admins" content="210035012261105621676375" />
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{url_for('static', filename='img/WBT.png')}}" type="image/x-icon">
+
+    <!-- Page specific CSS -->
+    <!-- <link href="{{url_for('static', filename='styles/css/main.css')}}" rel="stylesheet"> -->
+    
+    <link href="{{ static('dist/styles/css/main.css') }}" rel="stylesheet">
+    <!-- <link href="{{ static('styles/css/normalize.css') }}" rel="stylesheet"> -->
+    <!-- <link href="{{ static('styles/css/app.50903e4c0c5529be08779a4a946a7ddd.css') }}" rel="stylesheet"> -->
+    {% if g.is_mobile %}
+    <link href="{{ url_for('static',filename='bower_components/weui/dist/style/weui.min.css') }}" rel="stylesheet">
+    {% endif %}
+    <!-- Outdated Browser Plugin Styles -->
+    {% if not g.is_mobile %}
+    <link href="{{url_for('static', filename='bower_components/outdated-browser/outdatedbrowser/outdatedbrowser.min.css')}}" rel="stylesheet">
+    {% endif %}
+    <!-- <script src="{{url_for('static',filename='bower_components/handlebars/handlebars.runtime.min.js')}}"></script> -->
+    <script src="{{ url_for('static', filename='bower_components/requirejs/require.js')}}"></script>
+    <!-- <script src="{{ url_for('static', filename='jquery-3.3.1/jquery-3.3.1.min.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', filename='scripts/jquery-3.3.1/jquery-3.2.1.min.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', filename='scripts/jquery-3.3.1/jquery.i18n.properties.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', filename='scripts/jquery-3.3.1/jquery.json.min.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', filename='scripts/language.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static',filename='scripts/jquery-3.3.1/jquery.qrcode.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='scripts/jquery-3.3.1/jquery-1.10.2.min.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static',filename='scripts/qrcode.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static',filename='scripts/jquery.qrcode.js') }}"></script> -->
+
+    <script type="text/javascript">
+        require.config({
+        paths: {
+            "jquery": "{{ url_for('static',filename='bower_components/jquery/dist/jquery.min') }}",
+            "jquery-ui": "{{ url_for('static', filename='bower_components/jquery-ui/jquery-ui') }}",
+            "jquery-downcount": "{{ url_for('static', filename='bower_components/jquery.downcount') }}",
+            "jquery-cityselect": "{{ url_for('static', filename='bower_components/jquery.cityselect') }}",
+            "jquery-qrcode": "{{ url_for('static', filename='bower_components/jquery.qrcode.min') }}",
+            "jquery-form": "{{ url_for('static', filename='bower_components/jquery-form/jquery.form') }}",
+            "jquery-i18n": "{{ url_for('static', filename='scripts/jquery-3.3.1/jquery.i18n.properties') }}",
+            "jquery-placeholder": "{{ url_for('static', filename='bower_components/jquery-placeholder/jquery.placeholder') }}",
+            "bootstrap": "{{ url_for('static',filename='bower_components/bootstrap/dist/js/bootstrap.min') }}",
+            "icheck": "{{ url_for('static',filename='bower_components/iCheck/icheck.min') }}",
+            "bootstrap-select": "{{ url_for('static',filename='bower_components/bootstrap-select/dist/js/bootstrap-select.min') }}",
+            "bootstrap-slider": "{{ url_for('static', filename='bower_components/bootstrap-slider/bootstrap-slider')}}",
+            "bootstrap-datepicker": "{{ url_for('static',filename='bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min') }}",
+            "smooth-scroll": "{{ url_for('static', filename='bower_components/smoothscroll/dist/smoothscroll')}}",
+            "utils": "{{ url_for('static', filename='scripts/utils') }}",
+            "vendor": "{{ url_for('static', filename='scripts/vendor') }}",
+            "jquery-validation": "{{ url_for('static',filename='bower_components/jquery-validation/dist/jquery.validate.min') }}",
+            "validate-zh": "{{ url_for('static',filename='bower_components/jquery-validation/src/localization/messages_zh') }}",
+            "plupload": "{{ url_for('static',filename='bower_components/plupload/js/plupload.full.min') }}",
+            "qiniu": "{{ url_for('static',filename='bower_components/qiniu/dist/qiniu') }}",
+            "modal-box": "{{ url_for('static',filename='bower_components/bootstrap/js/modal') }}",
+            "pingpp-js": "{{ url_for('static',filename='bower_components/pingpp-js/dist/pingpp') }}",
+            "affix": "{{url_for('static',filename='bower_components/bootstrap/js/affix')}}",
+            "language-text": "{{url_for('static',filename='scripts/vendor/language_text')}}",
+            "dropDown":"{{ url_for('static',filename='bower_components/bootstrap/js/dropdown') }}"
+        },
+        shim:{
+            'jquery-downcount': ['jquery'],
+            'jquery-qrcode': ['jquery'],
+            'jquery-i18n': ['jquery'],
+            'jquery-cityselect': ['jquery'],
+            'validate-zh': ['jquery'],
+            'modal-box': ['jquery'],
+            'affix': ['jquery'],
+            'bootstrap': ['jquery'],
+            'jquery-placeholder': ['jquery'],
+            'icheck': ['jquery'],
+            'smooth-scroll': ['jquery'],
+            "bootstrap-select": ['jquery'],
+            "bootstrap-slider": ['jquery'],
+            // "jquery-qrcode-min": ['jquery'],
+            "jquery-min": ['jquery'],
+            "bootstrap-datepicker": ['jquery', 'bootstrap'],
+            "vendor/jquery.cityselect":['jquery'],
+            "dropDown":['jquery','bootstrap'],
+        }
+
+    });
+    </script>
+    <script type='text/javascript'>
+        // setTimeout(function(){
+        //     {
+        //         var s=document.createElement('script');
+        //         s.type='text/javascript';
+        //         s.charset='UTF-8';
+        //         s.src=((location && location.href && location.href.indexOf('https') == 0)?
+        //             'https://ssl.microsofttranslator.com':'http://www.microsofttranslator.com')+'/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**&ctf=False&ui=true&settings=Manual&from=en';
+        //         var p=document.getElementsByTagName('head')[0]||document.documentElement;
+        //         p.insertBefore(s,p.firstChild); 
+        //     }
+        // },0);
+    </script>
+</head>
+

@@ -1,0 +1,73 @@
+{% extends 'frontend-base.html' %}
+{% from '/common/render_flashed_messages.html' import render_flashed_messages %}
+
+{% block content %}
+<center style="margin:50px;font-size: 16px;">
+  {{ render_flashed_messages('err') }}
+  {% for i in items %}
+    <p id="ro_pay">You are recharging {{ i.cate }},please use the eth-wallet to scan the QR code to complete your order</p>
+  {% endfor %}
+	<div id="output" style="margin:50px 0;"></div>
+	{% for eth_address in data %}
+	<div>
+		<span id="ro_adr">Receivable address:</span>
+		<span id="adress">{{ eth_address }}</span>
+		<textarea id="dis" style="position:absolute;top: 0;left: 0;opacity: 0;z-index: -10;"></textarea>
+		<button onclick="copy()" style="cursor: pointer;border-radius: 5px;color: #000;">Copy</button>
+	</div>
+	{% endfor %}
+	<!-- {% for status in status %}
+	<div id="status" style="display:none">{{ status }}</div>
+	{% endfor %} -->
+</center>
+
+<!-- <script src="{{ url_for('static',filename='scripts/index.js') }}"></script> -->
+<!-- <script src="{{ url_for('static',filename='scripts/jquery-3.3.1/jquery-1.10.2.min.js') }}"></script> -->
+
+<script type="text/javascript" src="{{ url_for('static',filename='scripts/jquery-3.3.1/jquery.qrcode.min.js') }}"></script>
+
+<script>
+  require(['jquery','jquery-qrcode'],function($){
+    // 生成付款地址的二维码
+    $(function(){
+      $('#output').qrcode(
+        document.getElementById("adress").innerHTML
+      );
+    });
+    setTimeout(getResult,3000);
+    // 页面进行监听，每3秒刷新一次
+    function getResult(){
+      $.ajax({
+        url : '/recharge/status/{{ rid }}',
+        type : 'get',
+        success : function(data){
+          // $('body').html(data);
+          console.log(data)
+          if(data.result === "success"){
+            window.location.reload();
+          }
+        }
+      });
+      setTimeout(getResult,3000);
+    };
+  });
+</script>
+<!-- 复制付款地址 -->
+<script type="text/javascript">
+    function copy(){
+      var adress = document.getElementById("adress").innerText;
+      var dis = document.getElementById("dis");
+      dis.value = adress; // 修改文本框的内容
+      dis.select(); // 选中文本
+      document.execCommand("copy"); // 执行浏览器复制命令
+      alert("Successful!已成功复制付款地址");
+    }
+</script>
+
+
+{% endblock %}
+
+
+
+
+

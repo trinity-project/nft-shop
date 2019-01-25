@@ -1,0 +1,66 @@
+{{ render_flashed_messages('user_order-success') }}
+<div class="charge-records">
+	<div class="smallBox">
+        <div>
+            {% for data in data %}
+            <div class="itemBox modalBox">
+                <p class="data">{{ data.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                <div  class="">
+                    <div class="clearfix">
+                        <div class="left col-xs-6">
+                            <span>订单编号:</span> <span class="num data">{{data.order_no}}</span>
+                        </div>
+                        <div class="right col-xs-6">
+                            <p>
+                                <span>买家信息:</span> 
+                                <span class="data">
+									{{current_user.email}}
+                                </span>
+                            </p>
+                            <p>
+                                <span>订单金额:</span>
+                                 <span class="data">
+                                        {{ "%.8f"|format(data.amount) }}{{ data.price_unit}}
+                                </span>
+                            </p>
+                            <span class="data" hidden>{{ data.price_unit }}</span>
+                            <span class="data" hidden>{{ data.details[0].price }}</span>
+                            <span class="data" hidden>{{ data.details[0].quantity }}</span>
+                            <span class="data" hidden>{{ data.details[0].commodity.name }}</span>
+                            <span class="data" hidden>{{ data.details[0].commodity.commodity_type }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}	
+        </div>
+    </div>
+	<table class="table" id="or_1">
+		<thead>
+			<tr>
+				<th>创建时间</th>
+				<th>订单编号</th>
+				<th>卖家信息</th>
+				<th>订单金额</th>
+			</tr>
+        </thead>
+		<tbody class="cz-body">
+			{% for data in data %}
+			<tr class="modalBox">
+				<td class="data" style="color:#888;">{{ data.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+				<td class="data">{{ data.order_no }}</td>
+				<td class="data">{{ data.details[0].commodity.seller.email }}</td>
+				<td class="data" style="color:green">{{ "%.8f"|format(data.amount) }}{{ data.price_unit}}</td>
+				<td class="data" hidden>{{ "%.8f"|format(data.details[0].price) }}{{ data.price_unit }}</td>
+				<td class="data" hidden>{{ data.details[0].quantity }}</td>
+				<td class="data" hidden>{{ data.details[0].commodity.name }}</td>
+				<td class="data" hidden>{% if data.details[0].commodity.commodity_type == 1 %}nft商品{% else %}道具商品{% endif %}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% include "cn/modal_box/orderinfos_modal.html" %}
+
+

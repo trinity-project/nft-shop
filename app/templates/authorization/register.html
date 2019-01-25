@@ -1,0 +1,91 @@
+{% extends 'frontend-base.html' %}
+{% block second_header %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div>
+            <span class="col-sm-1 col-xs-0" >  </span>
+            <p class = "h3  col-sm-10" id="skr">{{ "注册" if g.lang == "cn"  else "SIGN UP" }}</p>
+        </div>
+        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-8">
+            <div class="inner">
+                <form role="form" action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
+                    {{ register_user_form.hidden_tag() }}
+                    <div class="form-group">
+                        <label data-language="register_lg_1">{{ "邮箱" if g.lang == "cn"  else "Email" }}</label>
+                        {% for error in register_user_form.email.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ register_user_form.email(class_="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        <label data-language="register_lg_2">{{ "密码" if g.lang == "cn"  else "Password(combined with numerals and letters. Plz note: case sensitive and no spaces)" }}</label>
+                        {% for error in register_user_form.password.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ register_user_form.password(class_="form-control") }}
+                    </div>
+                    {#{% for field in register_user_form %}
+                    {{field.name}}
+                    {% endfor %}#}
+                    <div class="form-group">
+                        {% if register_user_form.password_confirm %}
+                        <label data-language="register_lg_3">{{ "确认密码" if g.lang == "cn"  else "Confirm password" }}</label>
+                        {% for error in register_user_form.password_confirm.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ register_user_form.password_confirm(class_="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {% if register_user_form.pay_password %}
+                        <label data-language="register_lg_3">{{ "支付密码(6位)" if g.lang == "cn"  else "Pay password (6-digit)" }}</label>
+                        {% for error in register_user_form.pay_password.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ register_user_form.pay_password(class_="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group" style="position: relative;">
+                        <label>{{ "图片验证码" if g.lang == "cn"  else "Image verification code" }}</label>
+                        {% for error in register_user_form.image_code.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ register_user_form.image_code(class_="form-control") }}
+                        <img src="data:image/png;base64,{{register_user_form.img}}" alt="" id="code_img" title="{{ "点击刷新验证码" if g.lang == "cn"  else "Click to refresh the verification code" }}">
+                    </div>
+                    <div class="form-group" style="position: relative;">
+                        <label>{{ "邮箱验证码" if g.lang == "cn"  else "Email verification code" }}</label>
+                        {% for error in register_user_form.email_code.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ register_user_form.email_code(class_="form-control") }}
+                        <a id="get_code" class="" href="javascript:void(0);">{{"获取邮箱验证码" if g.lang == "cn" else "Get email verification code"}}</a>
+                        <span id="get-sms-left" class="text-desc hidden" style="font-size: 12px;position: absolute;top: 33px;right: 5px;">90s后可重新获取</span>
+                        <span style="font-size: 12px;color:green;display: block;margin-top: -10px;">
+                            {{ "如果您不能收到验证码，请检查您的垃圾邮件" if g.lang == "cn"  else "Please check your junk email if you can't receive the code." }}
+                            </span>
+                    </div>
+                    <div class="form-group" style="margin-top: 30px;">
+                        <button type="submit" class="btn btn-success form-control" data-language="register_lg_4">{{ "注册" if g.lang == "cn"  else "Sign up" }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/auth.js')}}"></script>
+<script type=text/javascript>
+    window.onload = function () {
+        if(!navigator.cookieEnabled){
+            alert("Browser disables Cookie.Enable please");
+        };
+    }
+</script>
+{% endblock %}
+{% block footer %}
+{% endblock %}

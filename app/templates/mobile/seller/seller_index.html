@@ -1,0 +1,76 @@
+{% extends 'mobile/m_base.html' %}
+{% block side_menu %}
+{% endblock %}
+{% block content %}
+<div class="m-user-center" style="padding-bottom:52px;">
+	<section class="user-info">
+		<div class="user-avatar">
+			<img  src="{{sellers[0].user.avatar}}">
+		</div>
+		<div style="margin-top:10px;">{{sellers[0].seller.name}}</div>
+	</section>
+	<section class="user-relates" id="container">
+		<ul class="list clearfix">
+			<li><a href="{{url_for('seller_products',seller_id=sellers[0].seller.id)}}">查看商品</a></li>
+			<li><a href="{{url_for('seller_announced',seller_id=sellers[0].seller.id)}}">揭晓记录</a></li>
+			<li><a data-id="{{sellers[0].seller.id}}" class="exchange-goods" href="javascript:void(0);" id="showActionSheet">兑换商品</a></li>
+		</ul>
+	</section>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('home')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<section class="exchange-menu">
+	    <div class="weui_mask_transition" id="mask"></div>
+	    <div class="weui_actionsheet" id="weui_actionsheet">
+	        <div class="weui_actionsheet_menu">
+	            <div class="select-count exchange-forms">
+	            	<div class="head">
+	            		<span>兑换验证</span>
+	            		<span id="actionsheet_cancel" class="glyphicon describe-info glyphicon-remove-circle pull-right"></span>
+	            	</div>
+	            	<div class="tips">温馨提示: 卡号和秘密均为5位纯数字</div>
+	            	<div class="weui_cell code">
+	            	    <div class="weui_cell_hd"><label style="margin:0" class="weui_label">兑换卡号</label></div>
+	            	    <div class="weui_cell_bd weui_cell_primary">
+	            	        <input id="ex_code" class="weui_input"  max="5" type="number" pattern="[0-9]*" placeholder="请输入兑换卡号"/>
+	            	    </div>
+	            	</div>
+	            	<div class="weui_cell">
+	            	    <div class="weui_cell_hd"><label style="margin:0" class="weui_label">兑换密码</label></div>
+	            	    <div class="weui_cell_bd weui_cell_primary">
+	            	        <input id="ex_password" class="weui_input" type="number" pattern="[0-9]*" placeholder="请输入兑换秘密" max="5"/>
+	            	    </div>
+	            	</div>
+	            	<button class="weui_btn weui_btn_primary submit-btn">立即兑换</button>
+	            </div>
+	        </div>
+	    </div>
+	</section>
+	<div class="weui_dialog_confirm" id="tips_dialog" style="display:none">
+	    <div class="weui_mask"></div>
+	    <div class="weui_dialog">
+	        <div class="weui_dialog_hd"><strong class="weui_dialog_title">弹窗标题</strong></div>
+	        <div class="weui_dialog_bd">自定义弹窗内容，居左对齐显示，告知需要确认的信息等</div>
+	        <div class="weui_dialog_ft">
+	            <a href="#" class="weui_btn_dialog primary">确定</a>
+	        </div>
+	    </div>
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/m_seller_index.js')}}"></script>
+{% endblock %}

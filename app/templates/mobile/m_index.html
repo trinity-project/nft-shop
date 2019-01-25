@@ -1,0 +1,107 @@
+{% extends 'mobile/m_base.html' %}
+{% block side_menu %}
+<ul class="m-side-menu">
+    <li class="scroll-top"><a href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
+</ul>
+{% endblock %}
+{% block content %}
+<div class="m-index">
+	<section class="slider text-center">
+		<img style="max-width:100%" src="/static/img/m_baner.jpg">
+	</section>
+	<section class="lucky-list"></section>
+	<section class="filter">
+		<ul class="options clearfix">
+			{% if current_cate %}
+			<li {{ "class=active" if order=='hot' }}><a href="{{url_for('product_cate',cid=current_cate.id,order='hot')}}">人气</a></li>
+			<li {{ "class=active" if order=='left' }}><a href="{{url_for('product_cate',cid=current_cate.id,order='left')}}">进度</a></li>
+			<li {{ "class=active" if order=='price_up' or order=='price_down' }}>
+				{% if order == 'price_up' %}
+				<a class="need-count" href="{{url_for('product_cate',cid=current_cate.id,order='price_down')}}">
+					<span>总需人次</span>
+					<span style="border-bottom-color:#c43926" class="arrow-up"></span>
+					<span class="arrow-down"></span>
+				</a>
+				{% else %}
+				<a class="need-count" href="{{url_for('product_cate',cid=current_cate.id,order='price_up')}}">
+					<span>总需人次</span>
+					<span class="arrow-up"></span>
+					<span {{'style=border-top-color:#c43926' if order == 'price_down'}} class="arrow-down"></span>
+				</a>
+				{% endif %}
+			</li>
+			<li class="cate active">
+				<a class="toggle-cate" href="javascript:void(0)">
+					<span>分类</span>
+					<span style="border-top-color:#c43926" class="arrow-down"></span>
+				</a>
+			</li>
+			{% else %}
+			<li {{ "class=active" if order=='hot' }}><a href="{{url_for('product_all',order='hot')}}">人气</a></li>
+			<li {{ "class=active" if order=='left' }}><a href="{{url_for('product_all',order='left')}}">进度</a></li>
+			<li {{ "class=active" if order=='price_up' or order=='price_down' }}>
+				{% if order == 'price_up' %}
+				<a class="need-count" href="{{url_for('product_all',order='price_down')}}">
+					<span>总需人次</span>
+					<span style="border-bottom-color:#c43926" class="arrow-up"></span>
+					<span class="arrow-down"></span>
+				</a>
+				{% else %}
+				<a class="need-count" href="{{url_for('product_all',order='price_up')}}">
+					<span>总需人次</span>
+					<span class="arrow-up"></span>
+					<span {{'style=border-top-color:#c43926' if order == 'price_down'}} class="arrow-down"></span>
+				</a>
+				{% endif %}
+			</li>
+			<li class="cate">
+				<a class="toggle-cate" href="javascript:void(0)">
+					<span>分类</span>
+					<span class="arrow-down"></span>
+				</a>
+			</li>
+			{% endif %}
+		</ul>
+		<ul class="cate-list">
+			<li {{ 'class=active' if not current_cate }} ><a href="{{url_for('product_all')}}">全部商品</a></li>
+			{% for cate in g.categories() %}
+			<li {{ 'class=active' if current_cate and current_cate.id == cate.id }}><a href="{{url_for('product_cate',cid=cate.id)}}">{{cate.name}}</a></li>
+			{% endfor %}
+		</ul>
+	</section>
+	<section class="product-list">
+		<div class="row fix-margin index-list">
+			{% for item in periods %}
+			{% include 'mobile/common/m_list_item.html' %}
+			{% endfor %}
+		</div>
+	</section>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('product_show')}}">
+					<div><span class="glyphicon glyphicon-camera"></span></div>
+					<span>商品晒单</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('my_home')}}">
+					<div><span class="glyphicon glyphicon-user"></span></div>
+					<span>我的夺宝</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/m_template.js')}}"></script>
+<script src="{{static(filename='scripts/m_common.js')}}"></script>
+{% endblock %}

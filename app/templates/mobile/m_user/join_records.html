@@ -1,0 +1,60 @@
+<div class="m-user-join fix-fixed">
+	<div class="user-head-tips">
+		<span class="glyphicon glyphicon-chevron-left go-back "></span>
+		<span>夺宝记录</span>
+	</div>
+	<table class="table">
+		<tbody class="join-body list-container" data-uid="{{user.id}}">
+			{% for item in records %}
+			<tr>
+				<td class="col-img"><a href="{{url_for('period_detail',pid=item.period.id)}}"><img src="{{item.period.product.thumbnail}}"></a></td>
+				<td class="product-info">
+					<a class="link-color" href="{{url_for('period_detail',pid=item.period.id)}}">{{item.period.product.title}}
+					</a>
+					<div class="describe-info">总需<span>{{item.period.total_count}}</span>人次</div>
+					{% if item.period.status == 0 %}
+					<div class="sell-progress">
+						<span class="orange" style="width:{{item.period.percent}}%"></span>
+					</div>
+					<div class="describe-info clearfix">
+						<span>参与<strong>{{item.count}}</strong>人次</span>
+						<span class="pull-right">剩余{{item.period.left}}人次</span>
+					</div>
+					{% else %}
+					<div class="describe-info clearfix">
+						<span>参与<strong>{{item.count}}</strong>人次</span>
+						<span class="pull-right">{{ '已揭晓' if item.period.status == 2 else '揭晓中'}}</span>
+					</div>
+					{% endif %}
+					<div class="period-number">第{{item.period.number}}期</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('home')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('my_home')}}">
+					<div><span class="glyphicon glyphicon-user"></span></div>
+					<span>我的夺宝</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+
+		</ul>
+	</section>
+</div>
+

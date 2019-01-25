@@ -1,0 +1,24 @@
+{{#each data}}
+<tr>
+	<td class="col-img">
+		<a href="/shop/{{this.period.id}}">
+			<img src="{{this.period.product.thumbnail}}">
+		</a>
+	</td>
+	<td class="product-info">
+		<a class="link-color" target="_blank" href="/shop/{{this.period.id}}">{{this.period.product.title}}
+		</a>
+		<div class="describe-info clearfix">
+			<span>总需<span>{{this.period.total_count}}</span>人次</span>
+			<span class="pull-right">总共参与<strong>{{this.count}}</strong>人次</span>
+		</div>
+		<div class="describe-info jx-time">
+			<span>揭晓时间: {{this.period.kj_time}}</span>
+		</div>
+		<div class="period-number clearfix">
+			<span>第{{this.period.number}}期</span>
+			<span class="pull-right">幸运号码: <strong>{{this.period.kj_num}}</strong></span>
+		</div>
+	</td>
+</tr>
+{{/each}}

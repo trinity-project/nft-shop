@@ -1,0 +1,38 @@
+<div class="m-user-show fix-fixed">
+	<div class="user-head-tips">
+		<span class="glyphicon glyphicon-chevron-left go-back "></span>
+		<span>晒单记录</span>
+	</div>
+	<div class="m-show-container">
+		<div class="row fix-margin list-container">
+			{% for item in records %}
+			{% include 'mobile/common/m_show_item.html' %}
+			{% endfor %}
+		</div>
+	</div>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('home')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('my_home')}}">
+					<div><span class="glyphicon glyphicon-user"></span></div>
+					<span>我的夺宝</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+
+		</ul>
+	</section>
+</div>
+

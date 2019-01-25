@@ -1,0 +1,28 @@
+{{#each data}}
+<tr class="head">
+	<td class="head-col" colspan="3">
+		<div>
+			<span>第{{this.number}}期</span>
+			<span class="pull-right red-color">揭晓时间: {{this.kj_time}}</span>
+		</div>
+	</td>
+</tr>
+<tr class="m-history-item">
+	<td class="col-img"><a href="/user/{{this.zj_user.id}}"><img src="{{this.zj_user.avatar}}"></a></td>
+	<td class="join-detail">
+		<a href="/shop/{{this.period.id}}">
+			<div class="zj-user">
+				<span class="describe-info">幸运用户: </span><span>{{this.zj_user.name}}</span>
+			</div>
+			<div class="user-id">
+				<span><span class="describe-info">用户ID: </span>{{this.zj_user.display_id}}(唯一不变的标识)</span>
+			</div>
+			<div class="lucky-num describe-info"><span>幸运号码: <strong>{{this.kj_num}}</strong></span></div>
+		</a>
+	</td>
+	<td style="font-size:14px;">
+		<a style="color:#ccc;" href="/shop/{{this.period.id}}"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	</td>
+</tr>
+<tr><td colspan="3"></td></tr>
+{{/each}}

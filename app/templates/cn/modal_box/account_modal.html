@@ -1,0 +1,127 @@
+<div class="modal fade" id="option-modal" role="dialog" >
+  	<div class="modal-dialog">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">分配资产到游戏</h4>
+			</div>
+			<div class="modal-body">
+				<div class="asset-info">
+					<div>资产类型：<span class="asset-type"></span></div>
+					<div>资产编号：<span class="asset-no"></span></div>
+				</div>
+				<form action="/user/distribution" method="post">
+					<input type="hidden" name="coin_id" class="coin-id">
+					<input type="hidden" name="asset_id" class="asset-id">
+					<input type="hidden" name="page" class="page">
+					<input type="hidden" name="asset" class="asset-name">
+					<div class="form-group">
+						<label>选择游戏</label>
+						<select class="form-control" name="game">
+							{% for g in game %}
+							<option>{{ g.name }}</option>
+							<input type="hidden" name="game_id" value="{{ g.id }}">
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group">
+						<label>分配数量</label>
+						<input class="available-count form-control" type="" name="amount">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn  btn-my form-control">确定</button>
+					</div>
+				</form>
+			</div>
+	    </div><!-- /.modal-content -->
+  	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- 提币模态框模型 -->
+<div class="modal fade" id="option-modal-1" role="dialog" >
+  	<div class="modal-dialog">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">提币到您的账户</h4>
+			</div>
+			<div class="modal-body">
+				<div class="asset-info">
+					<div>资产类型：<span class="asset-type"></span></div>
+					<div>资产编号：<span class="asset-no"></span></div>
+				</div>
+				<form action="/user/take_coin" method="post">
+					<input type="" name="coin_id" class="coin-id" hidden>
+					<input type="" name="coin_type" class="coin-type" hidden>
+					<input type="" name="asset_no" class="asset-no" hidden>
+					<input type="hidden" name="page" class="page-num">
+					<div class="form-group">
+						<label id="mod_2_ca">提币地址</label>
+                        <input class="form-control" type="" name="coin_location">
+					</div>
+					<div class="form-group">
+						<label id="mod_2_cn">提币数量</label>
+						<input class="form-control available-count" type="" name="coin_num">
+					</div>
+					<div class="form-group">
+						<label>请输入6位支付密码进行验证</label>
+						<input class="form-control" type="password" name="pay_pwd">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn  btn-my form-control" id="mod_2_con">确定</button>
+					</div>
+				</form>
+			</div>
+	    </div><!-- /.modal-content -->
+  	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+{#挂售模态框模型#}
+<div class="modal fade" id="option-modal-2" role="dialog">
+  	<div class="modal-dialog">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="mod_3_ha">挂售资产</h4>
+			</div>
+			<div class="modal-body">
+				<div class="asset-info">
+					<div>资产类型：<span class="asset-type"></span></div>
+					<div>资产编号：<span class="asset-no"></span></div>
+				</div>
+				<form action="/user/sell_coin" method="post">
+					<input type="" name="coin_id" class="coin-id" hidden>
+					<input type="" name="coin_name" class="coin-name" hidden>
+					<input type="" name="page" class="page-num" hidden>
+					<div class="form-group" hidden>
+						<label id="mod_3_cn">挂售数量</label>
+						<input class="form-control available-count" type="" name="coin_num" readonly>
+					</div>
+					<div class="form-group">
+						<label id="mod_3_cn">售价</label>
+						<input class="form-control" type="" name="sell_price">
+					</div>
+					<div class="form-group" hidden>
+						<label id="mod_3_cn">售价单位</label>
+							<select>
+								{% for i in infos %}
+								{% if i.name != 'nft' %}
+								<option>{{ i.name }}</option>
+								{% endif %}
+								{% endfor %}
+							</select>
+					</div>
+					<div class="form-group">
+						<label>请输入6位支付密码进行验证</label>
+						<input class="form-control" type="password" name="pay_pwd">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-my form-control" id="mod_3_con">确定</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

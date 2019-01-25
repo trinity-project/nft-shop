@@ -1,0 +1,89 @@
+{% extends 'frontend-base.html' %}
+{% from '/common/render_flashed_messages.html' import render_flashed_messages %}
+{% block content %}
+{% if data.status %}
+<div class="container">
+    <h3>Recharge Detail</h3>
+    <!-- <form class="infos_form" action="/user/recharge"> -->
+    <table class="table">
+        <tr>
+            <th data-language="recharge_infos_lg_1">Creation time</th>
+            <th data-language="recharge_infos_lg_6">Complete time</th>
+            <th data-language="recharge_infos_lg_2">Asset type</th>
+            <th colspan="2" data-language="recharge_infos_lg_3">Amount of recharge</th>
+            <th data-language="recharge_infos_lg_3">Tx hash</th>
+        </tr>
+        <tr>
+            <td>{{ data.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+            <td>{{ data.complete_at.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+            <td>{{ data.cate.name }}</td>
+            <td colspan="2">
+                {% if data.cate.name == "WBA" %}
+                {{ data.value|int }}
+                {% else %}
+                {{ "%.8f"|format(data.value) }}
+                {% endif %}
+            </td>
+            <td>{{ data.tx_id }}</td>
+        </tr>
+    </table>
+    <div class="text-center">
+        <a class="btn btn-success" href="{{url_for('user_recharge')}}">check record list</a>
+    </div>
+    <!-- </form> -->
+</div>
+{% else %}
+<center style="margin:50px;font-size: 16px;">
+    {{ render_flashed_messages('recharge-error') }}
+    <p id="ro_pay">You are recharging {{ data.cate.name }}.please scan the QR code with your Ethereum wallet.</p>
+    <div id="output" style="margin:50px 0;"></div>
+    <div>
+        <span id="ro_adr">payment address:</span>
+        <span id="adress">{{ data.user.eth_address }}</span>
+        <textarea id="dis" style="position:absolute;top: 0;left: 0;opacity: 0;z-index: -10;"></textarea>
+        <button onclick="copy()" style="cursor: pointer;border-radius: 5px;color: #000;">Copy</button>
+    </div>
+</center>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if not data.status %}
+<script>
+require(['jquery','jquery-qrcode'],function($){
+    // 生成付款地址的二维码
+    $(function(){
+      $('#output').qrcode(
+        document.getElementById("adress").innerHTML
+      );
+    });
+    setTimeout(getResult,3000);
+    // 页面进行监听，每3秒刷新一次
+    function getResult(){
+      $.ajax({
+        url : '/recharge/status/{{ data.id }}',
+        type : 'get',
+        success : function(data){
+          // $('body').html(data);
+          console.log(data)
+          if(data.result === "success"){
+            window.location.reload();
+          }
+        }
+      });
+      setTimeout(getResult,3000);
+    };
+});
+function copy(){
+    var adress = document.getElementById("adress").innerText;
+    var dis = document.getElementById("dis");
+    dis.value = adress; // 修改文本框的内容
+    dis.select(); // 选中文本
+    document.execCommand("copy"); // 执行浏览器复制命令
+    alert("Copy payment address successfully");
+}
+</script>
+{% endif %}
+{% endblock %}
+
+
+

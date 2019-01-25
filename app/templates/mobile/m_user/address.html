@@ -1,0 +1,35 @@
+<div class="m-address fix-fixed">
+	<div class="user-head-tips">
+		<span class="glyphicon glyphicon-chevron-left go-back "></span>
+		<span>地址管理</span>
+	</div>
+	<ul class="list" data-uid="{{user.id}}">
+		{% for item in records %}
+		<li class="item" data-id="{{item.id}}" data-name="{{item.name}}" data-tel="{{item.tel}}" data-prov="{{item.province}}" data-city="{{item.city}}" data-dist="{{item.dist}}" data-id="{{item.id}}" data-detail="{{item.detail}}">
+			<div class="contact">
+				<span style="margin-right:10px;">{{item.name}}</span>
+				<span>{{item.tel}}</span>
+			</div>
+			<div class="detail">
+				<span>{{item.province}}{{item.city}}{{item.dist}}{{item.detail}}</span>
+			</div>
+			<ul class="options clearfix">
+				{% if item.id == current_user.default_address_id %}
+				<li class="text-left"><a class="" href="javascript:void(0);">默认</a></li>
+				{% else %}
+				<li class="text-left"><a class="default-addr link-color" href="javascript:void(0);">设为默认</a></li>
+				{% endif %}
+				<li class="text-center"><a class="edit-addr link-color" href="javascript:void(0);">编辑</a></li>
+				<li class="text-right"><a class="delete-addr link-color" href="javascript:void(0);">删除</a></li>
+			</ul>
+		</li>
+		{% endfor %}
+	</ul>
+	<div class="bottom-option">
+		<button class="weui_btn weui_btn_primary bottom-btn">添加地址</button>
+		{% include 'mobile/m_user/modal_addr.html' %}
+	</div>
+</div>
+{% block scripts %}
+<script src="{{static(filename='scripts/m_addr.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'frontend-base.html' %}
+{% from '/common/pagination.html' import render_pagination %}
+{% block content %}
+{% from '/common/render_flashed_messages.html' import render_flashed_messages %}
+{{ render_flashed_messages('reset-success') }}
+{{ render_flashed_messages(['take-error','take-warn', 'take-success']) }}
+<div class="user-center bgf0eff4">
+	<div class="crumbs-back">
+		<div class="container">
+			<div class="user-info clearfix">
+				<ul class="info-list" data-id="{{user.id}}">
+					<li class="left col-sm-6">
+						<div class="img">
+							<img class="" src="/static/img/head.png" alt="">
+						</div>
+						<div class="pad-le20 recharge-option">
+							<p class="name">{{current_user.email}}</p>
+							<p class="col-xs-6 col-sm-12"> 
+								<a href="/reset" class="" href="javascript:void(0);" data-language="home_lg_4">修改密码</a>
+							</p>
+							<p class="samllShow col-xs-6 ">
+								<a  class="recharge" href="javascript:void(0);" >资产充值</a>
+							</p>
+							<p class="col-xs-6 col-sm-12"> 
+								<a href="/reset_pay" class="" href="javascript:void(0);" data-language="home_lg_4">修改支付密码</a>
+							</p> 
+							<p class="samllShow col-xs-6">
+								<a class="exchange" href="javascript:void(0);" >资产兑换</a>
+							</p>
+						</div>
+					</li>
+					<li class="right col-sm-6 recharge-option">
+						<p>
+							<a class="recharge btn btn-lg btn-my" href="javascript:void(0);">资产充值</a>
+						</p>
+						<p>
+							<a class="exchange btn btn-lg btn-my" href="javascript:void(0);">资产兑换</a>
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="relate-content">
+			<div class="scroll">
+				<ul class="tabs ">
+					<li  class="col-sm-2 col-xs-4  {{ 'active' if request.path == url_for('my_home') }}">
+						<a href="{{url_for('my_home')}}">我的账户</a>
+					</li>
+					<li class="col-sm-2 col-xs-4 {{ 'active' if request.path == url_for('user_recharge') }}">
+						<a href="{{url_for('user_recharge')}}">充值记录</a>
+					</li>
+					<li class="col-sm-2 col-xs-4 {{ 'active' if request.path == url_for('user_takeout') }}">
+						<a href="{{url_for('user_takeout')}}">提币记录</a>
+					</li>
+					<li class="col-sm-2 col-xs-4 {{ 'active' if request.path == url_for('user_sales') }}">
+						<a href="{{url_for('user_sales')}}">售卖记录</a>
+					</li>
+					<li class="col-sm-2 col-xs-4 {{ 'active' if request.path == url_for('user_order') }}">
+						<a href="{{url_for('user_order')}}">订单记录</a>
+					</li>
+					<li class="col-sm-2 col-xs-4 {{ 'active' if request.path == url_for('user_exchange') }}">
+						<a href="{{url_for('user_exchange')}}">兑换记录</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-content bgf0eff4">
+				{% set wrap_tpl = (g.lang or "en") + "/" %}
+				{% if request.path == url_for('my_home') %}
+				{% include wrap_tpl + "user/account.html" %}
+				{% elif request.path == url_for('user_recharge') %}
+				{% include wrap_tpl + "user/recharge_records.html" %}
+				{% elif request.path == url_for('user_sales') %}
+				{% include wrap_tpl + "user/sales_records.html" %}
+				{% elif request.path == url_for('user_order') %}
+				{% include wrap_tpl + "user/order_records.html" %}
+				{% elif request.path == url_for('user_takeout') %}
+				{% include wrap_tpl + "user/takeout_records.html" %}
+				{% elif request.path == url_for('user_exchange') %}
+				{% include wrap_tpl + "user/exchange_records.html" %}
+				{% endif %}
+			</div>
+			<div style="color:#888;font-size:16px;margin-top:40px;display:none" class="text-center tips">已触到到尽头了!</div>
+		</div>
+		
+	</div>
+</div>
+{% if pagination.pages >=1 %}
+<div class="bottom-pagination text-center">
+	{{ render_pagination(pagination) }}
+</div>
+{% endif %}
+{% include "cn/modal_box/home_modal.html" %}
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/user_home.js')}}"></script>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+
+
+

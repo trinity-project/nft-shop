@@ -1,0 +1,92 @@
+{% extends 'mobile/m_base.html' %}
+{% block content %}
+<div class="number-rule fix-fixed">
+	<div class="user-head-tips">
+		<span class="glyphicon glyphicon-chevron-left go-back "></span>
+		<span>计算规则</span>
+	</div>
+	{% if period.status == 2 %}
+	<ul class="count-rule">
+		<li>
+			<div><strong>{{period.kj_num}}</strong></div>
+			<span class="describe-info">本期幸运号码</span>
+		</li>
+		<li class="operator">=</li>
+		<li>
+			<div>( {{period.kj_count | int}}</div>
+			<span class="describe-info">最后50个时间求和</span>
+		</li>
+		<li class="operator">+</li>
+		<li>
+			<div>{{period.kj_ssc | int}} )</div>
+			{% if period.kj_ssc == 0 %}
+			<span class="describe-info">抱歉,{{period.issue_ssc | int}}期老时时彩开奖结果获取失败</span>
+			{% else %}
+			<span class="describe-info">{{period.issue_ssc | int}}期老时时彩开奖号码</span>
+			{% endif %}
+		</li>
+		<li class="operator">%</li>
+		<li><div>{{period.total_count}}</div>
+			<span class="describe-info">该商品总需人次</span>
+		</li>
+		<li class="operator">+</li>
+		<li>
+			<div>10000001</div>
+			<span class="describe-info">原始数</span>)
+		</li>
+	</ul>
+	{% else %}
+	<ul class="count-rule">
+		<li>
+			<div><strong>?</strong></div>
+			<span class="describe-info">本期幸运号码</span>
+		</li>
+		<li class="operator">=</li>
+		<li>
+			<div>( {{period.kj_count | int}}</div>
+			<span class="describe-info">最后50个时间求和</span>
+		</li>
+		<li class="operator">+</li>
+		<li>
+			<div>? )</div>
+			<span class="describe-info">{{period.issue_ssc | int}}期老时时彩开奖号码</span>
+		</li>
+		<li class="operator">%</li>
+		<li><div>{{period.total_count}}</div>
+			<span class="describe-info">该商品总需人次</span>
+		</li>
+		<li class="operator">+</li>
+		<li>
+			<div>10000001</div>
+			<span class="describe-info">原始数</span>)
+		</li>
+	</ul>
+	{% endif %}
+	<div style="font-size:12px;padding:0 5px;">
+		<div>如果时时彩开奖号码前面数字为0,我们只显示有效的整数部分,如01897(时时彩号码)--1897(有效的整数部分);00213(时时彩号码)--213(有效的整数部分)</div>
+		<div class="red-color">注:如遇福彩中心通讯故障，无法获取上述期数的中国福利彩票“老时时彩”开奖结果，则默认“老时时彩”开奖结果为0。敬请谅解....</div>
+	</div>
+	<table class="table">
+		<thead class="rule-head">
+			<tr>
+				<th>夺宝记录</th>
+				<th class="name-col">用户昵称</th>
+			</tr>
+		</thead>
+		<tbody class="rule-body">
+			<tr><td class="text-center" colspan="2">截止该商品最后夺宝时间点前全站最后50条参与记录</td></tr>
+			{% for item in join_records %}
+			<tr>
+				<td>
+					<span>{{item.created_datetime[:-3]}}</span>--<span class="red-color">{{item.time_number}}</span>
+				</td>
+				<td class="name-col"><span>{{item.owner.name | truncate(6,true)}}</span></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/m_common.js')}}"></script>
+{% endblock %}

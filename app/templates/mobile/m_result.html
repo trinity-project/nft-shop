@@ -1,0 +1,83 @@
+{% extends 'mobile/m_base.html' %}
+{% block side_menu %}
+{% endblock %}
+{% block content %}
+<div class="m-result fix-fixed">
+	<div class="user-head-tips">
+		<span>订单结果</span>
+	</div>
+	{% if order_result.charge_type == '购买' %}
+	{% if order_result.status %}
+	<!-- 夺宝成功 -->
+	<div class="result-title">
+		<span class="glyphicon glyphicon-ok"></span>
+		<span>恭喜您，参与成功！请等待系统为您揭晓！</span>
+	</div>
+	{% else %}
+	<div class="result-title">
+		<span class="glyphicon glyphicon-remove"></span>
+		<span>抱歉，参与失败,本期号码不足或已被抢光！</span>
+		<div style="font-size:12px;"><strong>您所支付的款项将在两个工作日内退回您的支付账户!</strong></div>
+	</div>
+	<!-- 夺宝失败 -->
+	{% endif %}
+	{% elif order_result.charge_type == '充值' %}
+	<div class="result-title">
+		<span class="glyphicon glyphicon-ok"></span>
+		<span>恭喜您，充值成功！</span>
+	</div>
+	{% endif %}
+	<div class="result-detail">
+        {% if order_result.charge_type == '购买' %}
+        {% if order_result.status %}
+		<div class="head">您成功参与了<span class="red-color">{{order_result.count}}</span>人次夺宝，信息如下：</div>
+        {% else %}
+        <div class="head">您此次夺宝失败，信息如下：</div>
+        {% endif %}
+        <ul class="list">
+        	<li>
+        		<span>支付时间:</span> 
+        		<span>{{order_result.created_datetime.strftime('%Y-%m-%d %H:%M:%S')}}</span>
+        	</li>
+        	<li>
+        		<span>支付方式: </span>
+        		<span>{{order_result.pay_method}}</span>
+        	</li>
+        	<li>
+        		<span>支付货币:</span> 
+        		<strong>{{order_result.amount}}{{'夺宝币' if order_result.pay_method == '余额' else '元'}}</strong>
+        	</li>
+        	<li>
+        		<span>参与商品: </span>
+        		<a href="{{url_for('period_detail',pid=order_result.period.id)}}">{{order_result.period.product.title}} 第{{order_result.period.number}}期</a>
+            </li>
+            <li><span>参与人次: </span><span>{{order_result.count}}人次</span></li>
+            <li><span>获得号码: </span><span>{{order_result.num | truncate(100,true)}}</span></li>
+            {% if order_result.status %}
+            <li><a href="{{url_for('user_home_join',uid=current_user.id)}}">查看夺宝记录</a></li>
+            {% else %}
+             <li><a href="{{url_for('/')}}">返回首页</a></li>
+            {% endif %}
+        </ul>
+        {% elif order_result.charge_type == '充值' %}
+        <div>您成功充值了<span class="red-color">{{order_result.count}}</span>个夺宝币，信息如下：</div>
+        <ul class="list">
+        	<li>
+        		<span>支付时间:</span> 
+        		<span>{{order_result.created_datetime.strftime('%Y-%m-%d %H:%M:%S')}}</span>
+        	</li>
+        	<li>
+        		<span>支付方式: </span>
+        		<span>{{order_result.pay_method}}</span>
+        	</li>
+        	<li>
+        		<span>支付货币:</span> 
+        		<strong>{{order_result.amount}}元</strong>
+        	</li>
+            <li><span>获得夺宝币: </span><span>{{order_result.count}}个</span></li>
+             <li><a href="{{url_for('user_home_cz',uid=current_user.id)}}">查看充值记录</a></li>
+        </ul>
+        {% endif %}
+  	</div>
+</div>
+{% endblock %}

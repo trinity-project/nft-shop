@@ -1,0 +1,28 @@
+{% extends 'frontend-base.html' %}
+{% block content %}
+{% block nav %}
+    {% include wrap_tpl + "/nav.html" %}
+{% endblock %}
+<div class="{% if not g.is_mobile %}container {% else %}m-guide{% endif %} guide">
+    <div class="row">
+        <span class="col-sm-1 col-xs-0" >  </span>
+        <p class = "h3  col-sm-10">NOVICE GUIDE</p>
+    </div>
+    <div class="text-center red-color col-sm-9 col-sm-offset-1">
+        <!-- 了解NFT商城平台 -->
+        <!-- <h3 id="under">Understand the NFT business city platform</h3>
+        <p class="step">
+            <span class="num active">1</span> <span class="line"></span> 
+            <span class="num">2</span> <span class="line"></span> 
+            <span class="num">3</span>  
+        </p> -->
+        <p style="font-size: 18px;text-align: left;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Marketplace is for players to buy tools and trade NFT assets, which helps you to run your company in the game. Here you have an official store and a C2C market. In the official store, you can buy several tools to improve your gaming performance, including employee packages and other cards with WBT. C2C market is a secondary market where you can trade NFT assets, such as your employees. It is also a gateway to your assets in the real world.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can also check your account for your record in the marketplace, including top-up record, withdrawal record, sales record, order history and exchange record.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/bootstrap-item.js')}}"></script>
+{% endblock %}

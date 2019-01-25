@@ -1,0 +1,91 @@
+{% extends 'frontend-base.html' %}
+{% from '/common/pagination.html' import render_pagination %}
+{% block content %}
+{% block nav %}
+    {% include wrap_tpl + "/nav.html" %}
+{% endblock %}
+{% from '/common/render_flashed_messages.html' import render_flashed_messages %}
+{{ render_flashed_messages('c2c_market-warn') }}
+
+<div class="pro-list">
+	<div class="crumbs-back">
+		<div class="container">
+			<div class="categorys col-sm-4">
+				<!-- 所有分类 -->
+				<span class="cate-text pull-left" id="lass" style="width: 145px;">All Category：</span>
+				<!-- <ul class="cate-list"> -->
+					{% if not current_cate %}
+					<!-- 所有商品 -->
+					<!-- <li><a style="color:#c43926" href="" id="ag">All</a></li> -->
+					{% else %}
+					<!-- 所有商品 -->
+					<!-- <li><a href="" id="ag_1">All</a></li> -->
+					{% endif %}
+				<!-- </ul> -->
+				<div class="dropdown pull-left">
+					<button class="btn " type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{% if cate == 1 %}nft commodity{% elif cate == 2 %}prop commodity{% else %}all{% endif %}
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li><a href="{{ url_for('c2c_market',cate=0) }}">all</a></li>
+						<li><a href="{{ url_for('c2c_market',cate=2) }}">prop commodity</a></li>
+						<li><a href="{{ url_for('c2c_market',cate=1) }}">nft commodity</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<ul class="sorts">
+					<!-- 排序 -->
+					<span class="cate-text pull-left">Sort：</span>
+					<!-- 人气商品 -->
+					<li {{ "class=active" if not sort or sort=='date' }}><a href="{{ url_for('c2c_market',sort='date') }}">New Arrival</a></li>
+					<!-- 最新上架 -->
+					<li {{ "class=active" if sort=='hot' }}><a href="{{ url_for('c2c_market',sort='hot') }}">Popular Goods</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="bgm_f3">
+		<div class="container">
+			<div class="row list">
+				{% for item in data %}
+				{% include 'common/list_item.html' %}
+				{% endfor %}
+			</div>
+		</div>
+		{% if pagination and pagination.pages >=2 %}
+		<div class="bottom-pagination text-right row">
+			<div class="view col-sm-3 col-xs-0">
+				<span>VIEW</span>
+				<span class=" num {{ 'active' if request.args.get('num', '12') == '12' }}">
+					<a href="{{ url_for('c2c_market',num=12) }}">12</a>
+				</span>
+				<span class="num {{ 'active' if request.args.get('num', '24') == '24' }}">
+					<a href="{{ url_for('c2c_market',num=24) }}">24</a>
+				</span>
+			</div>
+			<div class="col-sm-9">
+				{% if not current_cate %}
+				{{ render_pagination(pagination) }}
+				{% else %}
+				{{ render_pagination(pagination, current_cate.id) }}
+				{% endif %}
+			</div>
+		</div>		
+		{% endif %}
+	</div>
+</div>
+{% for message in get_flashed_messages(category_filter=['err']) %}
+    <div class="errorHint error" id="hint">
+        <p>{{ message }}</p>
+        <span class="close-my" id="closeHint">x</span>
+    </div>
+{% endfor %}
+
+{% include "en/modal_box/market_modal.html" %}
+
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/index.js')}}"></script>
+{% endblock %}

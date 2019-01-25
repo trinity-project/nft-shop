@@ -1,0 +1,83 @@
+{{ render_flashed_messages('exchange-success') }}
+<div class="charge-records">
+    <div class="smallBox">
+        <div>
+            <!-- <p class="h3">兑换记录 </p> -->
+            {% for item in records %}
+            <div class="itemBox">
+                <p>{{ item.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                <div  class="">
+                    <div class="clearfix">
+                        <div class="left col-xs-6">
+                            <span>交易对:</span> <span class="num">{{item.pair}}</span>
+                        </div>
+                        <div class="right col-xs-6">
+                            <p>
+                                <span>兑换数量:</span> 
+                                <span>
+                                    {% if item.exchange_type == 1 %}
+                                    + {{ item.pair.token.name[0].upper() }}{{ "%.8f"|format(item.quantity) }}
+                                    {% else %}
+                                    - {{ item.pair.token.name[0].upper() }}{{ "%.8f"|format(item.quantity) }}
+                                    {% endif %}
+                                </span>
+                                        
+                            </p>
+                            <p>
+                                <span>兑换总额:</span> 
+                                <span>
+                                    {% if item.exchange_type == 1 %}
+                                    - {{ item.pair.currency.name[0].upper() }}{{ "%.8f"|format(item.amount) }}
+                                    {% else %}
+                                    + {{ item.pair.currency.name[0].upper() }}{{ "%.8f"|format(item.amount) }}
+                                    {% endif %}
+                                </span>
+                            </p>
+                            <p hidden>
+                                <span>兑换类型:</span> <span>
+                                        {% if item.exchange_type == 1 %}买入{% else %}卖出{% endif %}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}	
+        </div>
+    </div>
+    <table class="table" id="table_3">
+        <thead>
+            <tr>
+                <th>兑换时间</th>
+                <th>交易对</th>
+                <th>兑换数量</th>
+                <th>兑换总额</th>
+                <th>兑换类型</th>
+            </tr>
+        </thead>
+        <tbody class="cz-body">
+            {% for item in records %}
+            <tr>
+                <td style="color:#888;">{{ item.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ item.pair }}</td>
+                <td><strong>
+                    {% if item.exchange_type == 1 %}
+                    + {{ item.pair.token.name[0].upper() }}{{ "%.8f"|format(item.quantity) }}
+                    {% else %}
+                    - {{ item.pair.token.name[0].upper() }}{{ "%.8f"|format(item.quantity) }}
+                    {% endif %}
+                </strong></td>
+                <td>
+                    {% if item.exchange_type == 1 %}
+                    - {{ item.pair.currency.name[0].upper() }}{{ "%.8f"|format(item.amount) }}
+                    {% else %}
+                    + {{ item.pair.currency.name[0].upper() }}{{ "%.8f"|format(item.amount) }}
+                    {% endif %}
+                </td>
+                <td style="color:green">{% if item.exchange_type == 1 %}买入{% else %}卖出{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

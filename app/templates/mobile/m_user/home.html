@@ -1,0 +1,48 @@
+<div class="m-user-center" style="padding-bottom:52px;">
+	<section class="user-info">
+		<div class="user-avatar">
+			<img {{ "id=edit-avatar" if current_user.id == user.id }} src="{{user.avatar}}">
+		</div>
+		<div class="name" data-uid="{{user.id}}">{{user.name}}</div>
+		{% if current_user.id == user.id %}
+		{% if is_seller %}
+		<a class="btn btn-primary" href="{{url_for('seller_index')}}">商家入口</a>
+		{% else %}
+		<div>余额: {{user.balance}}</div>
+		<a class="btn btn-primary" href="/charge">充值</a>
+		{% endif %}
+		{% endif %}
+	</section>
+	<section class="user-relates">
+		<ul class="list clearfix">
+			<li><a href="{{url_for('user_home_join',uid=user.id)}}">夺宝记录</a></li>
+			<li><a href="{{url_for('user_home_zj',uid=user.id)}}">中奖记录</a></li>
+			<li><a href="{{url_for('user_home_show',uid=user.id)}}">晒单记录</a></li>
+			{% if current_user.id == user.id %}
+			<li><a href="{{url_for('user_home_cz',uid=user.id)}}">充值记录</a></li>
+			<li><a href="{{url_for('user_home_address',uid=user.id)}}">地址管理</a></li>
+			<li><a href="{{url_for('user_home_coupon',uid=user.id)}}">优惠券</a></li>
+			<li><a href="{{url_for('user_home_excoupon',uid=user.id)}}">兑换券</a></li>
+			{% endif %}
+		</ul>
+	</section>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('home')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+</div>
+{% block scripts %}
+<script src="{{static(filename='scripts/m_user_home.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends 'mobile/m_base.html' %}
+{% block content %}
+<div class="m-shop">
+	<section class="period-info">
+		<div class="product">
+			<div class="p-img text-center">
+				<img src="{{period.product.thumbnail}}">
+			</div>
+			<div class="p-title">{{period.product.title}}</div>
+			{% if period.product.product_type %}
+			<div style="font-size:12px;font-weight:bold" class="red-color text-center">【该商品仅限于在{{period.product.seller.name}}兑换或使用】</div>
+			<div style="font-size:12px;" class="text-center">
+				<a class="link-color" href="{{url_for('seller_products',seller_id=period.product.seller.id)}}?view=normal">商家所有商品</a>
+			</div>
+			{% endif %}
+			{% if period.status == 0 and show_coupon %}
+			<div class="text-center">
+				<a href="javascript:void(0);" data-id="{{newest_coupon.id}}" style="font-size:13px;" class="red-color get-coupon">领取优惠券 【共{{newest_coupon.limit_count}}张】</a>
+			</div>
+			{% endif %}
+		</div>
+		<div class="sell-info">
+			{% if period.status == 0 %}
+			<div class="period-number">第{{period.number}}期</div>
+			<div class="sell-progress">
+				{% set pecent = period.join_count*100 / period.total_count %}
+				<span class="orange" style="width:{{pecent}}%"></span>
+			</div>
+			<div class="sell-count clearfix describe-info">
+				<span class="total-count ">总需{{period.total_count}}人次</span>
+				{% set left=period.total_count- period.join_count %}
+				<span class="pull-right">剩余{{left}}人次</span>
+				{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+				{% for category, message in messages %}
+				{% if category == 'amount' %}<div class="red-color text-center">{{ message }}</div>{% endif %}
+				{% endfor %}
+				{% endif %}
+				{% endwith %}
+			</div>
+			{% elif period.status == 2 %}
+			<div class="period-number">第{{period.number}}期幸运号码: <strong>{{period.kj_num}}</strong>
+			</div>
+			<div class="zj-user">
+				<table class="table">
+					<tbody data-pid="{{period.id}}">
+						{% include 'mobile/common/m_join_item.html' %}
+					</tbody>
+				</table>
+			</div>
+			{% else %}
+			<div class="kj-info text-center">
+				<div class="title">第{{period.number}}期揭晓倒计时</div>
+				<div class="hide diff-now text-center" data-now="{{count_now_time}}" data-finish="{{period.kj_time.strftime('%Y/%m/%d %H:%M:%S')}}"></div>
+				<div class="count-down kj-number"></div>
+			</div>
+			{% endif %}
+			<div class="my-code">
+				{% if current_user.id %}
+				{% if user_join_record %}
+				<div class="join-info text-center">
+					<span>您参与了{{user_join_record.count}}人次</span>
+					<a class="view-num" href="javascript:void(0)" data-num="{{user_join_record.num}}">查看号码</a>
+				</div>
+				{% else %}
+				<div class="text-center">您还未参与本期</div>
+				{% endif %}
+				{% else %}
+				<div class="no-login text-center">
+					<a href="{{ url_for_security('login') }}?next={{url_for('period_detail',pid=period.id)}}">请登陆</a><span>,查看你的夺宝号码</span>
+				</div> 
+				{% endif %}
+			</div>
+		</div>
+	</section>
+
+	<section class="period-relate">
+		{% if period.status !=0 %}
+		<a class="clearfix list-item-link" href="{{url_for('number_rule',pid=period.id)}}">
+			<span class="pull-left">计算规则</span>
+			<span class="pull-right describe-info"><span class="glyphicon glyphicon-chevron-right" style="font-size:14px;margin-left:5px;top:2px;"></span></span>
+		</a>
+		<hr>
+		{% endif %}
+		<a class="clearfix list-item-link" href="{{url_for('product_detail',proid=period.product.id)}}">
+			<span class="pull-left">图文详情</span>
+			<span class="pull-right describe-info">建议wifi下查看<span class="glyphicon glyphicon-chevron-right" style="font-size:14px;margin-left:5px;top:2px;"></span></span>
+		</a>
+		<hr>
+		<a class="clearfix list-item-link" href="{{url_for('product_history',proid=period.product.id)}}">
+			<span class="pull-left">往期回顾</span>
+			<span class="pull-right describe-info"><span class="glyphicon glyphicon-chevron-right" style="font-size:14px;margin-left:5px;top:2px;"></span></span>
+		</a>
+	</section>
+	<section class="period-join">
+		<div class="head">
+			<span>已有{{period.join_count}}人次参与</span>
+		</div>
+		<hr>
+		<table class="table">
+			<tbody class="join-body" data-pid="{{period.id}}">
+				
+			</tbody>
+		</table>
+	</section>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+	<div style="height:40px;"></div>
+	<section class="bottom-content" id="container">
+		{% if not period.status %}
+		{% if (period.product.status or period.product.product_type) and period.product.seller_product_status %}
+		<a href="javascript:;" class="weui_btn weui_btn_primary bottom-btn" id="showActionSheet">立即夺宝</a>
+		{% else %}
+		<a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_disabled bottom-btn">抱歉,该商品已下架</a>
+		{% endif %}
+		{% else %}
+		<a href="{{url_for('period_detail',pid=newest_period.id)}}" class="weui_btn weui_btn_primary bottom-btn">前往最新一期</a>
+		{% endif %}
+		<!--BEGIN actionSheet-->
+		<form method="post" action="/order">
+		    <div class="weui_mask_transition" id="mask"></div>
+		    <div class="weui_actionsheet" id="weui_actionsheet">
+		        <div class="weui_actionsheet_menu">
+		            <div class="select-count">
+		            	<div class="head">
+		            		<span>选择参与人次</span>
+		            		<span id="actionsheet_cancel" class="glyphicon describe-info glyphicon-remove-circle pull-right"></span>
+		            	</div>
+		            	<ul class="count-list clearfix">
+		            		<li ><span data-value="1" class="active">1</span></li>
+		            		<li><span data-value="5">5</span></li>
+		            		<li><span data-value="10">10</span></li>
+		            	</ul>
+		            	<div class="custom-count">
+		            		<div class="join-select text-center">
+								<input type="hidden" value="{{period.id}}" name="pid">
+								<a class="minus" href="javascript:void(0);"><span class="glyphicon glyphicon-minus"></span></a>
+								<input value="1" name="amount" type="number" pattern="[0-9]*">
+								<a class="plus" href="javascript:void(0);" data-max="{{left}}"><span class="glyphicon glyphicon-plus"></span></a>
+								<span class="describe-info">剩余{{left}}人次</span>
+							</div>
+		            	</div>
+		            	<button class="weui_btn weui_btn_primary submit-btn">提交订单</button>
+		            </div>
+		        </div>
+		    </div>
+		</form>
+	</section>
+	{% include 'mobile/common/m_num_dialog.html' %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/m_template.js')}}"></script>
+<script src="{{static(filename='scripts/m_shop.js')}}"></script>
+{% endblock %}

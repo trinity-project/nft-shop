@@ -1,0 +1,29 @@
+{% extends 'frontend-base.html' %}
+{% block content %}
+{% block nav %}
+    {% include wrap_tpl + "/nav.html" %}
+{% endblock %}
+<div class="{% if not g.is_mobile %}container {% else %}m-guide{% endif %} guide">
+    <div class="red-color">
+        <div class="row">
+            <span class="col-sm-1 col-xs-0" >  </span>
+            <p class = "h3  col-sm-10">商城简介</p>
+        </div>
+        <div class="text-center red-color col-sm-9 col-sm-offset-1">
+            <!-- 了解NFT商城平台 -->
+            <!-- <h3>了解NFT商城平台</h3> -->
+           <!--  <p class="step">
+                <span class="num active">1</span> <span class="line"></span> 
+                <span class="num">2</span> <span class="line"></span> 
+                <span class="num">3</span>  
+            </p> -->
+            <p style="font-size: 18px;text-align: left;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WOB商城主要为玩家提供NFT资产以及道具，帮助玩家运营公司。商城目前分为官方商城和C2C商城两部分。玩家在官方商城可以使用WBT购买员工以及相关道具，以供游戏运营之需；C2C商城作可以让玩家可以自由交易他们自己的NFT资产，快速变现。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;玩家可以在商城查询自己的账户信息以及交易记录，包括充值记录，提币记录，售卖记录，订单历史记录和兑换记录。</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/bootstrap-item.js')}}"></script>
+{% endblock %}

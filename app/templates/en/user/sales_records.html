@@ -1,0 +1,71 @@
+{{ render_flashed_messages('order-success') }}
+{{ render_flashed_messages('order-error') }}
+<div class="charge-records">
+	<div class="smallBox">
+		<div>
+			{% for item in records %}
+			<div class="itemBox item">
+				<p hidden class="data">{{ item.id }}</p>
+				<p class="data">{{ item.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+				<div  class="">
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>Commodity type:</span> </br>
+							<span class="num data">{% if item.commodity_type==1 %}nft commodity{% else %}prop commodity{% endif %}</span>
+						</div>
+						<div class="right col-xs-6">
+							<p>
+								<span>Selling Price:</span> 
+								<span class="data">
+										{{"%.8f"|format(item.price)}}{{item.price_unit}}
+								</span>
+							</p>
+							<p>
+								<span>Selling Status:</span> 
+								<span class="data">
+										{% if item.status %}Selling{% else %}end{% endif %}
+								</span>
+							</p>
+							<span class="data" hidden>-</span>
+							<span class="data" hidden>{{ page }}</span>
+						</div>
+					</div>
+					{% if item.status %}
+					<div class="btnBox">
+						<span class="distribute-option-3" onclick="">
+								Sell Stop
+						</span>
+					</div>
+					{% else %}
+					{% endif %}
+				</div>
+			</div>
+			{% endfor %}	
+		</div>
+	</div>
+	<table class="table" id="sr_2">
+		<thead>
+			<tr>
+				<th id="sr_st">Selling Time</th>
+				<th id="sr_aa">Commodity Type</th>
+				<th id="sr_sp">Selling Price</th>
+				<th id="sr_ss">Status</th>
+				<th id="sr_ss">Operation</th>
+			</tr>
+		</thead>
+		<tbody class="cz-body">
+			{% for item in records %}
+			<tr class="item">
+				<td class="data" hidden>{{ item.id }}</td>
+				<td class="data" style="color:#888;">{{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+				<td class="data">{% if item.commodity_type==1 %}nft commodity{% else %}prop commodity{% endif %}</td>
+				<td class="data">{{"%.8f"|format(item.price)}}{{item.price_unit}}</td>
+				<td class="data" style="color:green">{% if item.status %}Selling{% else %}End{% endif %}</td>
+				<td class="data">{% if item.status %}<a href="javascript:void(0);" class="distribute-option-3 link-color" style="color:red;font-weight: normal;">Sell Stop</a>{% else %}-{% endif %}</td>
+				<td class="data" hidden>{{ page }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% include "en/modal_box/stopsell_modal.html" %}

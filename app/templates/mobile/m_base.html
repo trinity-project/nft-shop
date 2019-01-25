@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    {% include "head.html" %}
+    <body ontouchstart="" class="mobile {% if current_user.id %}login{% endif %}" >
+        {% block header %}
+        {% include "mobile/m_header.html" %}
+        {% endblock %}
+
+        {% block side_menu %}
+        <ul class="m-side-menu">
+            <li><a href="{{url_for('home')}}"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="{{url_for('my_home')}}"><span class="glyphicon glyphicon-user"></span></a></li>
+            <li class="scroll-top"><a href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
+        </ul>
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% block scripts %}
+        {% endblock %}
+
+        {% block styles %}
+        {% endblock %}
+
+        {% block footer %}
+        {#{% include "mobile/m_footer.html" %}#}
+        {% endblock %}
+    {% if not g.is_dev %}
+      {% include "google-analytics.html" %}
+    {% endif %}
+    </body>
+</html>

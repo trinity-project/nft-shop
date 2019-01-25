@@ -1,0 +1,39 @@
+{% extends 'mobile/m_base.html' %}
+{% block side_menu %}
+{% endblock %}
+{% block content %}
+<div class="history-periods fix-fixed">
+	<div class="user-head-tips">
+		<!-- <span class="glyphicon glyphicon-chevron-left go-back "></span> -->
+		<span>揭晓记录</span>
+	</div>
+	<table class="table">
+		<tbody class="history-body announced-body">
+			{% for item in results %}
+			{% include 'mobile/common/seller_announced_item.html' %}
+			{% endfor %}
+		</tbody>
+	</table>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+</div>
+<section class="bottom-menu">
+	<ul class="options text-center">
+		<li>
+			<a href="{{url_for('seller_index')}}">
+				<div><span class="glyphicon glyphicon-home"></span></div>
+				<span>商家首页</span>
+			</a>
+		</li>
+		<li>
+			<a href="{{url_for('announced')}}">
+				<div><span class="glyphicon glyphicon-flash"></span></div>
+				<span>最新揭晓</span>
+			</a>
+		</li>
+	</ul>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/m_template.js')}}"></script>
+<script src="{{static(filename='scripts/m_common.js')}}"></script>
+{% endblock %}

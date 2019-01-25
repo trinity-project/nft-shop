@@ -1,0 +1,28 @@
+{% extends 'mobile/m_base.html' %}
+{% block side_menu %}
+{% endblock %}
+{% block content %}
+{% if request.endpoint == 'user_home' or request.endpoint == 'my_home' %}
+{% include "mobile/m_user/home.html" %}
+{% elif request.endpoint == 'user_home_join' %}
+{% include "mobile/m_user/join_records.html" %}
+{% elif request.endpoint == 'user_home_zj' %}
+{% include "mobile/m_user/lucky_records.html" %}
+{% elif request.endpoint == 'user_home_cz' %}
+{% include "mobile/m_user/charge_records.html" %}
+{% elif request.endpoint == 'user_home_address' %}
+{% include "mobile/m_user/address.html" %}
+{% elif request.endpoint == 'user_home_show' %}
+{% include "mobile/m_user/show_records.html" %}
+{% elif request.endpoint == 'user_home_coupon' %}
+{% include "mobile/m_user/coupons.html" %}
+{% elif request.endpoint == 'user_home_excoupon' %}
+{% include "mobile/m_user/excoupons.html" %}
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if request.endpoint in ['user_home_zj','user_home_cz','user_home_join', 'user_home_show'] %}
+<script src="{{static(filename='scripts/m_template.js')}}"></script>
+<script src="{{static(filename='scripts/m_user_common.js')}}"></script>
+{% endif %}
+{% endblock %}

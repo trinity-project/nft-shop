@@ -1,0 +1,16 @@
+{{#each data}}
+<tr class="m-join-item">
+	<td class="col-img"><a href="/user/{{this.owner.id}}"><img src="{{this.owner.avatar}}"></a></td>
+	<td class="join-detail">
+		<a href="/user/{{this.owner.id}}" class="link-color">{{this.owner.name}}</a>
+		<a class="view-num link-color" href="javascript:void(0);" data-num="{{this.num}}">查看号码</a>
+		<div class="user-id">
+			<span><span class="describe-info">用户ID: </span>{{this.owner.display_id}}(唯一不变的标识)</span>
+		</div>
+		<div class="join-info clearfix">
+			<span>参与了<strong>{{this.count}}</strong>人次</span>
+			<span class="describe-info pull-right">{{this.created_datetime}}</span>
+		</div>
+	</td>
+</tr>
+{{/each}}

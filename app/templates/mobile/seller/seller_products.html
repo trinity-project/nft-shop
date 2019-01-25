@@ -1,0 +1,71 @@
+{% extends 'mobile/m_base.html' %}
+{% block side_menu %}
+{% endblock %}
+{% block content %}
+{% if periods.count() %}
+{% set seller_name = periods[0].product.seller.name %}
+{% else %}
+{% set seller_name = '' %}
+{% endif %}
+<div class="m-user-join fix-fixed" {{ "style=padding-top:0" if seller_name == '万年时代影城' }}>
+	{% if seller_name == '万年时代影城' %}
+    <div class="text-center" style="margin-top:-1px;">
+		<img style="max-width:100%" src="http://img.aixunbang.com/dianying.jpg">
+	</div>
+	{% else %}
+	<div class="user-head-tips">
+		<!-- <span class="glyphicon glyphicon-chevron-left go-back "></span> -->
+		<span>所有商品</span>
+	</div>
+	{% endif %}
+	<table class="table">
+		<tbody class="join-body list-container" data-uid="{{user.id}}">
+			{% for item in periods %}
+			{% set period = item.get_display_data() %}
+			<tr>
+				<td class="col-img"><a href="{{url_for('period_detail',pid=period.id)}}"><img src="{{period.product.thumbnail}}"></a></td>
+				<td class="product-info">
+					<a class="link-color" href="{{url_for('period_detail',pid=period.id)}}">{{period.product.title}}
+					</a>
+					<div class="describe-info">总需<span>{{period.total_count}}</span>人次</div>
+					<div class="sell-progress">
+						<span class="orange" style="width:{{period.percent}}%"></span>
+					</div>
+					<div class="describe-info clearfix">
+						<span>参与<strong>{{period.join_count}}</strong>人次</span>
+						<span class="pull-right">剩余{{period.left}}人次</span>
+					</div>
+					<div class="period-number">第{{period.number}}期</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				{% if request.url.find('normal') > -1 %}
+				<a href="{{url_for('product_all')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+				{% else %}
+				<a href="{{url_for('seller_index')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>商家首页</span>
+				</a>
+				{% endif %}
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+
+		</ul>
+	</section>
+</div>
+{% endblock %}
+

@@ -1,0 +1,72 @@
+<div class="charge-records">
+	<!-- <ul class="header-options">
+		<li class="active">全部</li>
+		<li>今天</li>
+		<li>本周</li>
+		<li>本月</li>
+	</ul> -->
+	<div class="smallBox">
+		<div>
+			{% for item in records %}
+			<div class="itemBox">
+				<p>{{ item.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+				<div  class="">
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>资产类型:</span> <span class="num">{{item.cate}}</span>
+						</div>
+						<div class="right col-xs-6">
+							<p>
+								<span>充值数量:</span> 
+								{% if item.status %}
+									{% if "nft" in item.cate.name.lower() %}
+									<span>{{item.value|int}}</span>
+									{% else %}
+									<span>{{ "%.8f"|format(item.value) }}</span>
+									{% endif %}
+									{% else %}
+									<span>-</span>
+								{% endif %}
+							</p>
+							<p>
+								<span>充值进度:</span> 
+								<span>
+										{% if item.status %}完成{% else %}进行中{% endif %}
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}	
+		</div>
+	</div>
+	<table class="table" id="rr_2">
+		<thead>
+			<tr>
+				<th>充值时间</th>
+				<th>资产类型</th>
+				<th>充值数量</th>
+				<th>充值进度</th>
+			</tr>
+		</thead>
+		<tbody class="cz-body">
+			{% for item in records %}
+			<tr>
+				<td style="color:#888;">{{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+				<td>{{item.cate}}</td>
+				{% if item.status %}
+					{% if "nft" in item.cate.name.lower() %}
+					<td><strong>{{item.value|int}}</strong></td>
+					{% else %}
+					<td><strong>{{ "%.8f"|format(item.value) }}</strong></td>
+					{% endif %}
+				{% else %}
+				<td><strong>-</strong></td>
+				{% endif %}
+				<td style="color:green">{% if item.status %}完成{% else %}进行中{% endif %}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

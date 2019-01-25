@@ -1,0 +1,183 @@
+{{ render_flashed_messages('order-success') }}
+{{ render_flashed_messages('order-warn') }}
+{{ render_flashed_messages('order-error') }}
+<div class="charge-records bgf0eff4">
+	<div class="smallBox">
+		<div>
+			<!-- <p class="h3"> My Account </p> -->
+			<div style="font-size: 12px;color: green;text-align:center">Reminder:Only NFT assets have assets ID</div>
+			{% for item in items %}
+			<div class="itemBox item">
+				<p class="data">{{item.cate.name}}</p>
+				{% if item.asset_id %}
+				<div  class="">
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>Asset Amount:</span> </br> <span class="num data">1</span>
+						</div>
+						<div class="right col-xs-6">
+							<p>
+								<span>Available:</span><span class="data">{{1 - item.visible}}</span>
+							</p>
+							<p>
+								<span>Locked:</span> <span class="data">{{item.lock + 0}}</span>
+							</p>
+							<p>
+								<span>ASSET ID:</span> <span class="data">{{item.asset_id | truncate(10, True) }}</span>
+							</p>
+							<span class="data" hidden>{{item.id}}</span>
+							<span class=”data“ hidden>{{ page }}</span>
+						</div>
+					</div>
+					{% if not item.lock %}
+					<div class="btnBox num3">
+						<span class="distribute-option">Distribute</span>
+						<span class="distribute-option-1">Take Coin</span>
+						<span class="distribute-option-2">Sell</span>
+					</div>
+					{% else %}
+					{% endif %}
+				</div>	
+				{% else %}
+				<div >
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>Asset Amount:</span>
+							<span class="data num">
+								{% if item.amount == 0 %}
+								0
+								{% else %}
+								{{ "%.8f"|format(item.amount) }}
+								{% endif %}
+							</span>
+						</div>
+						<div class="right col-xs-6">
+							<p>
+								<span>Available:</span>
+									<span class="data">	
+									{% if item.amount - item.lock - item.take_lock == 0 %}
+									0
+									{% else %}
+									{{ "%.8f"|format(item.amount - item.lock -item.take_lock) }}
+									{% endif %}
+								</span>
+							</p>
+							<p>
+								<span>Locked:</span> 
+								<span class="data">
+										{% if item.lock + item.take_lock == 0 %}
+										0
+										{% else %}
+										{{ "%.8f"|format(item.lock + item.take_lock) }}
+										{% endif %}
+								</span>
+							</p>
+							<span class="data" hidden>-</span>
+							<span class="data" hidden>{{item.id}}</span>
+							<span class=”data“ hidden>{{ page }}</span>
+						</div>
+					</div>
+					{% if item.amount - item.lock - item.take_lock > 0 %}
+					<div class="btnBox">
+						{% if item.cate.name == 'WBT' %}
+						<span class="distribute-option" >Distribute</span>
+						{% endif %}
+						<span class="distribute-option-1">Take Coin</span>
+					</div>
+					{% else %}
+					{% endif %}
+				</div>
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	<table class="table">
+		<div style="font-size: 12px;color: green;text-align:center" class="acc_rem">Note: Only NFT assets have asset ID</div>
+		<thead>
+			<tr id="theadtr">
+				<th id="acc_at">Asset Type</th>
+				<th id="acc_an">Asset Amount</th>
+				<th id="acc_avn">Available</th>
+				<th id="acc_ln">Locked</th>
+				<th id="acc_ai">Asset ID</th>
+				<th id="acc_opera">Operation</th>
+			</tr>
+		</thead>
+		<tbody class="cz-body">
+			{% for item in items %}
+			{% if item.asset_id %}
+			{% set property_dict = item.parse_property() %}
+			<tr class="item">
+				<td class="data" style="color:#888;">
+					{% if property_dict.get("Avatar") %}
+					<img src="{{property_dict['Avatar'][0]}}" alt="" style="max-width:40px;">
+					{% else %}
+					{{ item.cate.name }}
+					{% endif %}
+				</td>
+				<td class="data" >1</td>
+				<td class="data" >{{1 - item.lock}}</td>
+				<td class="data" >{{item.lock + 0}}</td>
+				<!-- <td class="data" title="{{item.asset_id}}">{{item.asset_id | truncate(10, True) }}</td> -->
+				<td class="data">{{item.asset_id}}</td>
+				<td class="data"  hidden>{{item.id}}</td>
+				<td>
+					{% if not item.lock %}
+					<a class="distribute-option link-color" href="javascript:void(0);" id="acc_dis">Distribute</a> |
+					<a href="javascript:void(0);" class="distribute-option-1 link-color" id="acc_wm">Withdraw</a> |
+					<a href="javascript:void(0);" class="distribute-option-2 link-color" id="acc_has">Sell</a>
+					{% else %}
+					-
+					{% endif %}
+				</td>
+				<td class="data" hidden>{{ page }}</td>
+			</tr>
+			{% else %}
+			<tr class="item">
+				<td class="data" style="color:#888;">
+					{{item.cate.name}}
+				</td>
+				<td class="data">
+					{% if item.amount == 0 %}
+					0
+					{% else %}
+					{{ "%.8f"|format(item.amount) }}
+					{% endif %}
+				</td>
+				<td class="data">
+					{% if item.amount - item.lock - item.take_lock == 0 %}
+					0
+					{% else %}
+					{{ "%.8f"|format(item.amount - item.lock - item.take_lock) }}
+					{% endif %}
+				</td>
+				<td class="data">
+					{% if item.lock + item.take_lock == 0 %}
+					0
+					{% else %}
+					{{ "%.8f"|format(item.lock + item.take_lock) }}
+					{% endif %}
+				</td>
+				<td class="data">{{'-'}}</td>
+				<td class="data" hidden>{{item.id}}</td>
+				{% if item.amount - item.lock - item.take_lock > 0 %}
+				<td>
+					{% if item.cate.name == 'WBT' %}
+					<a class="distribute-option link-color" href="javascript:void(0);">Distribute</a> |
+					{% endif %}
+					<a href="javascript:void(0);" class="distribute-option-1 link-color">Withdraw</a>
+				</td>
+				{% else %}
+				<td>-</td>
+				{% endif %}
+				<td class="data" hidden>{{ page }}</td>
+			</tr>
+
+			{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% include "en/modal_box/account_modal.html" %}

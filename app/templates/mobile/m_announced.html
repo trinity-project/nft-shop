@@ -1,0 +1,21 @@
+{% extends 'mobile/m_base.html' %}
+{% block content %}
+<div class="history-periods fix-fixed">
+	<div class="user-head-tips">
+		<span class="glyphicon glyphicon-chevron-left go-back "></span>
+		<span>最新揭晓</span>
+	</div>
+	<table class="table">
+		<tbody class="history-body announced-body">
+			{% for item in order_details %}
+			{% include 'mobile/common/m_announced_item.html' %}
+			{% endfor %}
+		</tbody>
+	</table>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{static(filename='scripts/m_template.js')}}"></script>
+<script src="{{static(filename='scripts/m_common.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{{#each data}}
+<tr>
+	<td class="col-img">
+		<a href="/shop/{{this.period.id}}">
+			<img src="{{this.period.product.thumbnail}}">
+		</a>
+	</td>
+	<td class="product-info">
+		<a class="link-color" href="/shop/{{this.period.id}}">{{this.period.product.title}}</a>
+		<div class="describe-info">总需<span>{{this.period.total_count}}</span>人次</div>
+		{{#compare this.period.status 0}}
+		<div class="describe-info clearfix">
+			<span>参与<strong>{{item.count}}</strong>人次</span>
+			<span class="pull-right">{{#compare this.period.status 1}}已揭晓{{else}}揭晓中{{/compare}}</span>
+		</div>
+		{{else}}
+		<div class="sell-progress">
+			<span class="orange" style="width:{{this.period.pecent}}%"></span>
+		</div>
+		<div class="describe-info clearfix">
+			<span>参与<strong>{{this.count}}</strong>人次</span>
+			<span class="pull-right">剩余{{this.period.left}}人次</span>
+		</div>
+		{{/compare}}
+		<div class="period-number">第{{this.period.number}}期</div>
+	</td>
+</tr>
+{{/each}}

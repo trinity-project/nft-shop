@@ -1,0 +1,45 @@
+<div class="m-charge fix-fixed">
+	<div class="user-head-tips">
+		<span class="glyphicon glyphicon-chevron-left go-back "></span>
+		<span>充值记录</span>
+		<a style="color:#BC3033;margin-right:5px;" class="pull-right" href="{{url_for('charge')}}">充值</a>
+	</div>
+	<ul class="list list-container" data-uid="{{user.id}}">
+		{% for item in records %}
+		<li class="item">
+			<div class="charge-count clearfix">
+				<span style="margin-right:15px;">充值金额: <strong>{{item.pay_count}}</strong>元</span>
+				<span>获得夺宝币: <strong>{{item.db_count}}</strong>个</span>
+				<span class="pull-right">{{item.pay_method}}支付</span>
+			</div>
+			<div class="charge-info describe-info clearfix">
+				<span >时间: {{item.created_datetime}}</span>
+				<span class="pull-right">状态: <span style="color:green">{% if item.status %}成功{% else %}失败{% endif %}</span></span>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('home')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('my_home')}}">
+					<div><span class="glyphicon glyphicon-user"></span></div>
+					<span>我的夺宝</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+</div>

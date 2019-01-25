@@ -1,0 +1,18 @@
+{{#each}}
+<div class="col-md-3 col-sm-4 col-xs-6 fix-padding">
+	<div class="product-item">
+		<div class="img-link">
+			<a href="/show/{{this.id}}"><img src="{{this.thumbnail}}!list"></a>
+		</div>
+		<div class="product-title"><a class="link-color" href="/show/{{this.id}}">{{this.product.title}}</a></div>
+		<div><span class="describe-info">第{{this.period.number}}期</span></div>
+		<div class="lucky-number">
+			<span class="describe-info">幸运号码： <span class="red-color">{{this.period.kj_num}}</span></span>
+		</div>
+		<div class="user-info describe-info">
+			<a class="link-color" href="/user/{{this.owner.id}}">{{this.owner.name}}</a>
+			<span class="pull-right time">{{this.created_datetime}}</span>
+		</div>
+	</div>
+</div>
+{{/each}}

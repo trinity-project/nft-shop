@@ -1,0 +1,45 @@
+{% extends 'frontend-base.html' %}
+{% from '/common/pagination.html' import render_pagination %}
+{% block content %}
+{% block nav %}
+    {% include wrap_tpl + "/nav.html" %}
+{% endblock %}
+<div class="container">
+    <div class="show row">
+        <!-- 常见问题 -->
+        <div>
+            <span class="col-sm-1 col-xs-0" >  </span>
+            <p class = "h3  col-sm-10">Frequently Asked Questions</p>
+        </div>
+        <div class="col-sm-8 faq col-sm-offset-2">
+            <div>
+                <div>
+                    <div class="h2"></div>
+                    <p>1. How to register the game? <br>
+                        How do I sign up for a WOB account? Sign up in the market (http://market.wob.games/register). The account registered in the market is also the account for the game.</p>
+                    <p>2. What is WBT?<br>
+                        WBT is an ERC-20 token used in the game. You can earn WBTs by climbing to the top of leaderboard and use WBTs to boost your performance in the game, such as buy employees and reset the skills of your employees. It can also be traded like other crypto tokens.</p>
+                    <p>3. What is WBA?<br>
+                        WBA is the ticker of WOB NFT assets, that is staff in the game. These assets can be withdrawn and traded in C2C market.</p>
+                    <p>4. How to start the game?<br>
+                        WBT will facilitate the cash flow in the game. Thus players need to exchange some ETH for WBT before starting.<br>
+                        1) Deposite ETH <br>
+                        2) Exchange ETH for WBT <br>
+                        3) Login to the game and purchase either Collection or FreePaly version
+                    </p>
+                    <p>
+                        5. What is the difference between Collection and FreePlay?<br>
+                        Collection costs 500 WBT, with a package of 200,000 Golds, 3 Holiday Vouchers,  3 Certificates, 2 starry staffs.<br>
+                        FreePlay costs 300 WBT, allowing players to experience the full gameplay.<br>
+                        Please note that every registerd account has 10 staff for free.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/bootstrap-item.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,104 @@
+<!-- 充值 -->
+<div class="modal fade" id="recharge-option-modal" role="dialog" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title text-center">充值</h4>
+			</div>
+			<div class="modal-body">
+				<div class="asset-info" style="margin-bottom: 15px;">
+					<!-- class="asset-type" -->
+					<div>支持的充值类型为
+						{% for i in infos %}
+						<span>{{ i.name }}</span>
+						{% endfor %}
+					</div>
+					<!-- <div class="asset-no">资产编号：</div> -->
+				</div>
+				
+				<form action="{{url_for('user_recharge')}}" method="post">
+					<div class="form-group">
+						<label>选择充值资产</label>
+						<!-- <input id="recharge-asset-type" name="type" hidden type="text"> -->
+						<select class="form-control" name="type">
+								{% for i in infos %}
+								<option data-type="{{ i.name }}" value="{{ i.id }}{{ i.name }}">{{ i.name }}</option>
+								{% endfor %}
+						</select>
+					</div>
+					<!-- <div class="form-group" id="recharge-num">
+						<label>充值数量</label>
+						<input id="recharge-amount" name="amount" class="recharge-amount form-control">
+					</div> -->
+					<div class="form-group">
+						<button type="submit" class="btn  btn-my  form-control">确定</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 兑换 -->
+<div class="modal fade" id="exchange-option-modal" role="dialog" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title text-center">兑换</h4>
+			</div>
+			<div class="modal-body">
+				<div class="asset-info" style="margin-bottom: 15px;">
+					<!-- class="asset-type" -->
+					<!-- <div>目前支持的交易对有
+						<span>wbt/eth</span>
+						<span>wbt/tnc</span>
+					</div> -->
+					<!-- <div class="asset-no">资产编号：</div> -->
+				</div>
+				<form action="{{url_for('exchange_token')}}" method="post">
+					<div class="form-group">
+						<label>选择交易对</label>
+						<!-- <input id="recharge-asset-type" name="type" hidden type="text"> -->
+						<select id="exchange-pair-select" class="form-control">
+							{% for pair in pairs %}
+							<option value="{{pair.id}}">{{pair}}</option>
+							{% endfor %}
+						</select>
+						<input id="exchange-pair" name="exchange_pair" class="form-control" type="hidden">
+					</div>
+					<div class="form-group">
+						<label>选择买/卖</label>
+						<!-- <input id="recharge-asset-type" name="type" hidden type="text"> -->
+						<select id="exchange-type-select" class="form-control">
+							<option>买入</option>
+                            <!-- <option>卖出</option> -->
+						</select>
+						<input id="exchange-type" name="exchange_type" class="form-control" type="hidden">
+					</div>
+					<div class="form-group">
+						<label>预估兑换价格 ETH</label>
+						<input id="exchange-price" name="price" class="recharge-amount form-control" readonly>
+					</div>
+					<div class="form-group">
+						<label>兑换数量 WBT</label>
+						<input id="exchange-quantity" name="quantity" class="recharge-amount form-control" type="number" required>
+						<!-- <input id="exchange-points" name="points" class="recharge-amount form-control" type="range" min="1" max="10" step="1" value="5"> -->
+					</div>
+					<div class="form-group">
+						<label>预估交易额</label>
+						<input id="exchange-amount" name="amount" class="recharge-amount form-control" readonly>
+					</div>
+					<div class="form-group">
+						<label>请输入6位支付密码进行验证</label>
+						<input class="form-control" type="password" name="pay_pwd">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn  btn-my form-control">确定</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

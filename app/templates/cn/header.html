@@ -1,0 +1,43 @@
+<div id="header" class="top-header navbar">
+    <div data-v-5c2a2c84 class="top-line">
+        <div class="container">
+            <div class="tl-left pull-left container-fluid">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            语言
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="/switch/lang?next={{request.url}}&lang=en">English</a></li>
+                            <li><a href="/switch/lang?next={{request.url}}&lang=cn">简体中文</a></li>
+                        </ul>
+                    </div>
+            </div>
+            <div class="tl-right pull-right button-group" id="logwel">
+                <a href="http://wob.games/">首页</a>
+                <a href="{{url_for('market')}}" id="mar"> 官方商城</a>
+               {#} {{current_user.is_anonymous}} #}
+                {% if not current_user.get_id() %}
+                <a data-v-5c2a2c84="" href="/login">
+                    <label class="glyphicon glyphicon-user"></label>
+                    登录
+                </a>
+                <!-- <a data-v-5c2a2c84="" href="javascript:;" style="width: 13px;">|</a> 
+                <a data-v-5c2a2c84="" href="/register">注册</a> -->
+                {% else %}
+                <!-- <span>欢迎</span> -->
+                <a href="{{url_for('my_home')}}" id="user" class = "ver-top">{{ current_user.email }}</a>
+                <!-- <a href="{{url_for('my_home')}}">个人中心</a> -->
+                <a href="/logout">退出</a>
+                {% endif %}              
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% block scripts %}
+<script src="{{static(filename='scripts/header.js')}}"></script>
+{% endblock %}
+ 

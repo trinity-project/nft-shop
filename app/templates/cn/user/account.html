@@ -1,0 +1,179 @@
+{{ render_flashed_messages('order-success') }}
+{{ render_flashed_messages('order-warn') }}
+{{ render_flashed_messages('order-error') }}
+<div class="charge-records bgf0eff4">
+	<div class="smallBox">
+		<div>
+			<!-- <p class="h3"> 我的账户 </p> -->
+			<div style="font-size: 12px;color: green;text-align:center">温馨提示：只有nft资产才有资产ID</div>
+			{% for item in items %}
+			<div class="itemBox item">
+				<p class="data">{{item.cate.name}}</p>
+				{% if item.asset_id %}
+				<div  class="">
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>数量:</span> <span class="data num">1</span>
+						</div>
+						<div class="right col-xs-6">
+							<p>
+								<span>可用:</span> <span class="data">{{1 - item.visible}}</span>
+							</p>
+							<p>
+								<span>锁定:</span> <span class="data">{{item.lock + 0}}</span>
+							</p>
+							<p>
+								<span>ID:</span> <span class="data">{{item.asset_id}}</span>
+							</p>
+							<span class="data" hidden>{{item.id}}</span>
+						</div>
+					</div>
+					{% if item.visible %}
+					<div class="btnBox num3">
+						<span class="distribute-option">分配</span>
+						<span class="distribute-option-1">提币</span>
+						<span class="distribute-option-2">挂售</span>
+					</div>
+					{% else %}
+					{% endif %}
+				</div>	
+				{% else %}
+				<div >
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>数量:</span>
+							<span class="num data">
+								{% if item.amount == 0 %}
+								0
+								{% else %}
+								{{ "%.8f"|format(item.amount) }}
+								{% endif %}
+							</span>
+						</div>
+						<div class="right col-xs-6">
+							<p>
+								<span>可用:</span>
+								 <span class="data">	
+									{% if item.amount - item.lock - item.take_lock == 0 %}
+									0
+									{% else %}
+									{{ "%.8f"|format(item.amount - item.lock -item.take_lock) }}
+									{% endif %}
+								</span>
+							</p>
+							<p>
+								<span>锁定:</span> 
+								<span class="data">
+										{% if item.lock + item.take_lock == 0 %}
+										0
+										{% else %}
+										{{ "%.8f"|format(item.lock + item.take_lock) }}
+										{% endif %}
+								</span>
+							</p>
+							<span class="data" hidden>-</span>
+							<span class="data" hidden>{{item.id}}</span>
+						</div>
+					</div>
+					{% if item.amount - item.lock - item.take_lock > 0 %}
+					<div class="btnBox">
+						{% if item.cate.name == 'WBT' %}
+						<span class="distribute-option" >分配</span>
+						{% endif %}
+						<span class="distribute-option-1">提币</span>
+					</div>
+					{% else %}
+					{% endif %}
+				</div>
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	<table class="table">
+		<div style="font-size: 12px;color: green;text-align:center" class="acc_rem" >温馨提示：只有nft资产才有资产ID</div>
+		<thead>
+			<tr>
+				<th>资产类型</th>
+				<th>资产数量</th>
+				<th>可用数量</th>
+				<th>锁定数量</th>
+				<th>资产ID</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody class="cz-body">
+			{% for item in items %}
+			{% if item.asset_id %}
+			{% set property_dict = item.parse_property() %}
+			<tr class="item">
+				<td class="data" style="color:#888;">
+					{% if property_dict.get("Avatar") %}
+					<img src="{{property_dict['Avatar'][0]}}" alt="" style="max-width:40px;">
+					{% else %}
+					{{ item.cate.name }}
+					{% endif %}
+				</td>
+				<td class="data">1</td>
+				<td class="data">{{1 - item.lock}}</td>
+				<td class="data">{{item.lock + 0}}</td>
+				<td class="data">{{item.asset_id}}</td>
+				<td class="data" hidden>{{item.id}}</td>
+				<td>
+					{% if not item.lock %}
+					<a class="distribute-option link-color" href="javascript:void(0);">分配</a> |
+					<a href="javascript:void(0);" class="distribute-option-1 link-color">提币</a> |
+					<a href="javascript:void(0);" class="distribute-option-2 link-color">挂售</a>
+					{% else %}
+					-
+					{% endif %}
+				</td>
+				<td class="data" hidden>{{ page }}</td>
+			</tr>
+			{% else %}
+			<tr class="item">
+				<td class="data" style="color:#888;">
+					{{item.cate.name}}
+				</td>
+				<td class="data">
+					{% if item.amount == 0 %}
+					0
+					{% else %}
+					{{ "%.8f"|format(item.amount) }}
+					{% endif %}
+				</td>
+				<td class="data">
+					{% if item.amount - item.lock - item.take_lock == 0 %}
+					0
+					{% else %}
+					{{ "%.8f"|format(item.amount - item.lock - item.take_lock) }}
+					{% endif %}
+				</td>
+				<td class="data">
+					{% if item.lock + item.take_lock == 0 %}
+					0
+					{% else %}
+					{{ "%.8f"|format(item.lock + item.take_lock) }}
+					{% endif %}
+				</td>
+				<td class="data">{{'-'}}</td>
+				<td class="data" hidden>{{ item.id }}</td>
+				{% if item.amount - item.lock - item.take_lock > 0 %}
+				<td>
+					{% if item.cate.name == 'WBT' %}
+					<a class="distribute-option link-color" href="javascript:void(0);">分配</a> |
+					{% endif %}
+					<a href="javascript:void(0);" class="distribute-option-1 link-color">提币</a>
+				</td>
+				{% else %}
+				<td>-</td>
+				{% endif %}
+				<td class="data" hidden>{{ page }}</td>
+			</tr>
+
+			{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% include "cn/modal_box/account_modal.html" %}

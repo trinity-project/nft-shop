@@ -1,0 +1,18 @@
+{% macro render_flashed_messages(cates) -%}
+{% with messages = get_flashed_messages(with_categories=true,category_filter=cates) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <div class="errorHint {{category.split('-')[1]}}" id="hint">
+        <p>{{ message }}</p>
+        <span class="close-my" id="closeHint">x</span>
+    </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+{%- endmacro %}
+
+{% macro render_field_errors(errors) -%}
+{% for error in errors %}
+<span class="field-error">{{ error }}</span>
+{% endfor %}
+{%- endmacro %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+{% include "head.html" %}
+<body {{ "class=login" if current_user.id }}>
+<!--[if lt IE 9]>
+            <p class="chromeframe">我们检测到你正在使用<strong>古老的</strong> IE浏览器。请你<a href="http://browsehappy.com/">升级到比较新的版本</a>，我们建议您试试<a href="http://www.google.com/chromeframe/?redirect=true">谷歌浏览器</a> 来提升您的浏览体验。</p>
+        <![endif]-->
+{% set wrap_tpl = g.lang or "en" %}
+{% if not g.is_mobile %}
+    {% block header %}
+    {% include wrap_tpl + "/header.html" %}
+    {% endblock %}
+
+    {% block side_menu %}
+        <!-- <ul class="side-menu">
+        <li class="scroll-top"><span class="glyphicon glyphicon-chevron-up"></span></li>
+        </ul> -->
+    {% endblock %}
+{% endif %}
+
+{% block content %}
+{% endblock %}
+{% block order %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}
+{% block styles %}
+{% endblock %}
+{% block footer %}
+  {% include wrap_tpl +  "/footer.html" %}
+{% endblock %}
+
+{% if not g.is_dev %}
+  <script>
+
+    // (function () {
+
+    //   var bp = document.createElement('script');
+
+    //   bp.src = '//push.zhanzhang.baidu.com/push.js';
+
+    //   var s = document.getElementsByTagName("script")[0];
+
+    //   s.parentNode.insertBefore(bp, s);
+
+    // })();
+
+  </script>
+  {#{% include "google-analytics.html" %}#}
+{% endif %}
+
+</body>
+</html>

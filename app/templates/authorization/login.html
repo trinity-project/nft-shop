@@ -1,0 +1,64 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% from '/common/render_flashed_messages.html' import render_flashed_messages,render_field_errors %}
+{% extends 'frontend-base.html' %}
+{% block content %}
+{{ render_flashed_messages('reset-success') }}
+<div class="container">
+    <div class="row">
+        <div>
+            <span class="col-sm-1 col-xs-0" >  </span>
+            <p class = "h3  col-sm-10">{{ "登录" if g.lang == "cn"  else "SIGN IN" }}</p>
+        </div>
+        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-8">
+            <div class="inner">
+                <form role="form" action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+                    {{ login_user_form.hidden_tag() }}
+                    <div class="form-group">
+                        <label>{{ "邮箱" if g.lang == "cn"  else "Email" }}</label>
+                        {% for error in login_user_form.email.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ login_user_form.email(class_="form-control") }}
+                    </div>
+                    <div class="form-group">
+                    <label>{{ "密码" if g.lang == "cn"  else "Password" }}</label>
+                        {% for error in login_user_form.password.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ login_user_form.password(class_="form-control") }}
+                    </div>
+                    <div class="form-group" style="position: relative;">
+                        <label>{{ "图片验证码" if g.lang == "cn"  else "Image verification code" }}</label>
+                        {% for error in login_user_form.image_code.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                        {{ login_user_form.image_code(class_="form-control") }}
+                        <img src="data:image/png;base64,{{login_user_form.img}}" alt="">
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>{{ login_user_form.remember}}{{ "记住我" if g.lang == "cn"  else "Remember me" }}</label>
+                            <div style="float:right"><a href="/reset">{{ "忘记密码?" if g.lang == "cn"  else "Forget?" }}</a></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success form-control">{{ "登录" if g.lang == "cn"  else "Sign in" }}</button>
+                    </div>
+                    <div class="form-group">
+                        <div class="text-center register">
+                            <a href="/register">{{"还没有账号？现在去注册" if g.lang == "cn"  else "No account yet? Register now!"}}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block second_header %}
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/bootstrap-item.js')}}"></script>
+{% endblock %}
+{% block footer %}
+{% endblock %}

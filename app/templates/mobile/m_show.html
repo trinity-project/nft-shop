@@ -1,0 +1,17 @@
+{% extends 'mobile/m_base.html' %}
+{% block content %}
+<div class="m-show-list fix-fixed">
+	<div class="user-head-tips">
+		<!-- <span class="glyphicon glyphicon-chevron-left go-back "></span> -->
+		<span>商品晒单</span>
+	</div>
+	<div class="m-show-container">
+		<div class="row fix-margin show-list">
+			{% for item in shows %}
+			{% include 'mobile/common/m_show_item.html' %}
+			{% endfor %}
+		</div>
+	</div>
+	
+</div>
+{% endblock %}

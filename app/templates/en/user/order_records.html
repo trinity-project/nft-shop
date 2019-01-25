@@ -1,0 +1,61 @@
+{{ render_flashed_messages('user_order-success') }}
+<div class="charge-records">
+	<div class="smallBox">
+		<div>
+			{% for data in data %}
+			<div class="itemBox">
+				<p>{{ data.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+				<div  class="">
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>Order Number:</span> <span class="num">{{data.order_no }}</span>
+						</div>
+						<div class="right col-xs-6">
+							<p>
+								<span>Buyer Profiles:</span> 
+								<span>
+										{{ current_user.email }}
+								</span>
+										
+							</p>
+							<p>
+								<span>Order Amount:</span> 
+								<span>
+									{{ "%.8f"|format(data.amount) }}{{ data.price_unit}}
+								</span>
+							</p>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}	
+		</div>
+	</div>
+	<table class="table" id="or_2">
+		<thead>
+			<tr>
+				<th id="or_ct">Creation Time</th>
+				<th id="or_on">Order No.</th>
+				<th id="or_cb">Buyer Profile</th>
+				<th id="or_ag">Amount</th>
+			</tr>
+        </thead>
+		<tbody class="cz-body">
+			{% for data in data %}
+			<tr class="modalBox">
+				<td class="data" style="color:#888;">{{ data.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+				<td class="data">{{ data.order_no }}</td>
+				<td class="data">{{ data.details[0].commodity.seller.email }}</td>
+				<td class="data" style="color:green">{{ "%.8f"|format(data.amount) }}{{ data.price_unit}}</td>
+				<td class="data" hidden>{{ "%.8f"|format(data.details[0].price) }}{{ data.price_unit }}</td>
+				<td class="data" hidden>{{ data.details[0].quantity }}</td>
+				<td class="data" hidden>{{ data.details[0].commodity.name }}</td>
+				<td class="data" hidden>{% if data.details[0].commodity.commodity_type == 1 %}nft Commodity{% else %}Prop Commodity{% endif %}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% include "en/modal_box/orderinfos_modal.html" %}

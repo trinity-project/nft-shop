@@ -1,0 +1,44 @@
+<div class="m-coupons fix-fixed">
+	<div class="user-head-tips">
+		<span>我的优惠券</span>
+	</div>
+	<ul class="coupon-list list-container" data-uid="{{user.id}}">
+		{% for item in result %}
+		{% set coupon = item.code.coupon %}
+		<li class="coupon" name="优惠券" data-code="{{item.code.code}}" data-amount="{{coupon.amount}}">
+			<div class="clearfix">
+				<div class="left pull-left">
+					<div class="name">{{coupon.name}}</div>
+					<div class="value"><span class="cny">￥</span ><span class="count">{{coupon.amount}}</span></div>
+				</div>
+				<div class="sell-name pull-right">{{coupon.seller.name}}</div>
+			</div>
+			<div class="product-name text-center">仅限于参与{{coupon.product.title}}</div>
+			<a class="to-use pull-right" href="{{url_for('period_detail',pid=item.pid)}}">去使用 ></a>
+		</li>
+		{% endfor %}
+	</ul>
+	<div style="display:none" class="text-center loading-tips"><img src="/static/img/load.gif"></div>
+	<section class="bottom-menu">
+		<ul class="options text-center">
+			<li>
+				<a href="{{url_for('home')}}">
+					<div><span class="glyphicon glyphicon-home"></span></div>
+					<span>夺宝首页</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('my_home')}}">
+					<div><span class="glyphicon glyphicon-user"></span></div>
+					<span>我的夺宝</span>
+				</a>
+			</li>
+			<li>
+				<a href="{{url_for('announced')}}">
+					<div><span class="glyphicon glyphicon-flash"></span></div>
+					<span>最新揭晓</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+</div>

@@ -1,0 +1,46 @@
+<div class="m-addr-form">
+    <div class="weui_mask_transition" id="mask"></div>
+    <div class="weui_actionsheet" id="weui_actionsheet">
+        <div class="weui_actionsheet_menu form-content">
+            <div class="head">
+                <span>添加地址</span>
+                <span id="actionsheet_cancel" class="glyphicon describe-info glyphicon-remove-circle pull-right"></span>
+            </div>
+            <form class="form-horizontal" method="post" action="/api/v1.0/address">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="收件人姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="province" class="control-label col-sm-2">省/市/区</label>
+                        <div id="city" class="col-sm-10 line-input">
+                            <input type="hidden" class="form-control" id="province" name="province">
+                            <input type="hidden" class="form-control" id="city_input" name="city">
+                            <input type="hidden" class="form-control" id="dist" name="dist">
+                            <select type="text" class="form-control prov"></select>
+                            <select type="text" disabled="disabled" class="form-control city"></select>
+                            <select type="text" disabled="disabled" class="form-control dist"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="detail" placeholder="街道地址" name="detail">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="tel" placeholder="收件人电话" name="tel">
+                        </div>
+                    </div>
+                    <div class="form-group last-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button id="submitbtn" type="submit" class="weui_btn weui_btn_primary pb-btn">确定</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

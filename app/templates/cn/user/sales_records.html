@@ -1,0 +1,71 @@
+{{ render_flashed_messages('order-success') }}
+{{ render_flashed_messages('order-error') }}
+<div class="charge-records">
+	<div class="smallBox">
+		<div>
+			{% for item in records %}
+			<div class="itemBox item">
+				<span class="data" hidden>{{ item.id }}	</span>
+				<p class="data">{{ item.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+				<div  class="">
+					<div class="clearfix">
+						<div class="left col-xs-6">
+							<span>商品类型</span> 
+							<span class="num data">{% if item.commodity_type==1 %}nft商品{% else %}道具商品{% endif %}</span>
+						</div>
+						<div class="right col-xs-6">
+							<p hidden>{{ item.id }}</p>
+							<p>
+								<span>售卖价格:</span> 
+								<span class="data">
+										{{"%.8f"|format(item.price)}}{{item.price_unit}}
+								</span>
+							</p>
+							<p>
+								<span>售卖状态:</span> 
+								<span class="data">
+										{% if item.status %}挂售中{% else %}结束{% endif %}
+								</span>
+							</p>
+						</div>
+					</div>
+					{% if item.status %}
+					<div class="btnBox">
+						<span class=" data distribute-option-3">
+							停止挂售
+						</span>
+					</div>
+					{% else %}
+					{% endif %}
+					<span class="data" hidden>{{ page }}</span>
+				</div>
+			</div>
+			{% endfor %}	
+		</div>
+	</div>
+	<table class="table" id="sr_1">
+		<thead>
+			<tr>
+				<th>上架时间</th>
+				<th>商品类型</th>
+				<th>售卖价格</th>
+				<th>售卖状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody class="cz-body">
+			{% for item in records %}
+			<tr class="item">
+				<td class="data" hidden>{{ item.id }}</td>
+				<td class="data" style="color:#888;">{{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+				<td class="data">{% if item.commodity_type==1 %}nft商品{% else %}道具商品{% endif %}</td>
+				<td class="data">{{"%.8f"|format(item.price)}}{{item.price_unit}}</td>
+				<td class="data" style="color:green">{% if item.status %}挂售中{% else %}结束{% endif %}</td>
+				<td class="data">{% if item.status %}<a href="javascript:void(0);" class="distribute-option-3 link-color" style="color:red;font-weight: normal;">停止挂售</a>{% else %}-{% endif %}</td>
+				<td class="data" hidden>{{ page }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% include "cn/modal_box/stopsell_modal.html" %}

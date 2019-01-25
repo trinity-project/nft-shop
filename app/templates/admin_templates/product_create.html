@@ -1,0 +1,87 @@
+{% extends "admin/models/base_forms.html" %}
+
+{% block extra_script %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='bower_components/requirejs/require.js')}}"></script>
+  <script src="{{ url_for('static', filename='scripts/ueditor/ueditor.config.js')}}"></script>
+  <script src="{{ url_for('static', filename='scripts/ueditor/ueditor.all.min.js')}}"></script>
+  <script src="{{ static(filename='scripts/qiniu_upload.js')}}"></script>
+    <script type="text/javascript">
+        require.config({
+        paths: {
+            "jquery": "http://cdn.bootcss.com/jquery/2.1.4/jquery.min",
+            "plupload": "{{ url_for('static',filename="bower_components/plupload/js/plupload.full.min") }}",
+            "qiniu": "{{ url_for('static',filename="bower_components/qiniu/dist/qiniu") }}"
+        },
+    });
+    </script>
+{% endblock %}
+{% block breadcrumbs %}
+ {{ super() }}
+ <li><span class="divider">/</span> <a href="." data-language="product_create_lg_11"></a></li>
+{% endblock %}
+
+
+{% block content %}
+  {% include "admin/includes/form_raw_id.html" %}
+  {% if form.errors %}
+    <div class="alert alert-block alert-error">
+      <a class="close" data-dismiss="alert" href="#">×</a>
+      <p data-language="product_create_lg_1"></p>
+    </div>
+  {% endif %}
+  <form method="post" action="." class="add form-horizontal" enctype="multipart/form-data">
+    <fieldset>
+      {% if csrf_token %}{# Support for flask-seasurf #}<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">{% endif %}
+      <legend data-language="product_create_lg_2">{{ model_admin.get_display_name() }}</legend>
+      {% for field in form %}
+        {% if field.name == "content" %}
+  		  <div class="control-group">
+              <label class="control-label" for="content" data-language="product_create_lg_3"></label>
+              <div class="controls">
+                  <textarea id="content" name="content" style="width:800px;height:240px;"></textarea>
+                  <script type="text/javascript">
+
+                      var ue = UE.getEditor('content',{
+                          serverUrl: "/upload/",
+                          //关闭elementPath
+                          elementPathEnabled:false,
+                          //默认的编辑区域高度
+                          initialFrameHeight:500,
+                          initialFrameWidth:775,
+                          //更多其他参数，请参考umeditor.config.js中的配置项
+                          autoClearinitialContent:false
+                      });
+                  </script>
+              </div>
+        </div>
+        
+        {% elif field.name == "thumbnail" %}
+        <div class="control-group">
+            <label class="control-label" for="thumbnail" data-language="product_create_lg_4"></label>
+            <div class="controls">
+                <input class="span8 " id="thumbnail" name="thumbnail" type="text">
+                <a data-language="product_create_lg_5" class="btn btn-primary"></a>
+                <div>
+                  <span data-language="product_create_lg_6"></span>
+                  <img style="max-width:80px" class="preview-img" src="#">
+                </div>
+            </div>
+        </div>
+        {% else %}
+        {{ admin_field(field) }}
+        {% endif %}
+      {% endfor %}
+      {% block extra_form %}{% endblock %}
+      <div class="form-actions">
+        <button class="btn btn-primary" name="save" type="submit" data-language="product_create_lg_7"></button>
+        <button class="btn" name="save_add" type="submit" data-language="product_create_lg_8"></button>
+        <button class="btn" name="save_edit" type="submit" idata-language="product_create_lg_9"></button>
+        <a class="btn" href="{{ url_for(model_admin.get_url_name('index')) }}" data-language="product_create_lg_10"></a>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}
+{% block scripts %}
+<script src="{{ static(filename='scripts/qiniu_upload.js')}}"></script>
+{% endblock %}

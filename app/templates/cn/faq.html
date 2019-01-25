@@ -1,0 +1,28 @@
+{% extends 'frontend-base.html' %}
+{% from '/common/pagination.html' import render_pagination %}
+{% block content %}
+{% block nav %}
+    {% include wrap_tpl + "/nav.html" %}
+{% endblock %}
+<div class="container">
+    <div class="show row">
+    	<!-- 常见问题 -->
+        <div>
+            <span class="col-sm-1 col-xs-0" >  </span>
+            <p class = "h3  col-sm-10">常见问题</p>
+        </div>
+        <div class="col-sm-8 faq col-sm-offset-2">
+            <div>
+                <div>
+                    <div class="h2"></div>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/bootstrap-item.js')}}"></script>
+{% endblock %}

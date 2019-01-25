@@ -1,0 +1,50 @@
+{% if item.period.status == 1 %}
+<tr class="head">
+	<td class="head-col" colspan="3">
+		<div>
+			<span>第{{item.period.number}}期揭晓在即</span>
+		</div>
+	</td>
+</tr>
+<tr class="m-history-item">
+	<td class="col-img"><a href="{{url_for('period_detail',pid=item.period.id)}}"><img style="border-radius:0" src="{{item.period.product.thumbnail}}"></a></td>
+	<td class="join-detail">
+		<div class="count-down kj-number text-center" data-finish="{{item.period.kj_time.strftime('%Y/%m/%d %H:%M:%S')}}" data-now="{{count_now_time}}">
+		</div>
+	</td>
+	<td style="font-size:14px;">
+		<a href="{{url_for('period_detail',pid=item.period.id)}}" style="color:#ccc;" href=""><span class="glyphicon glyphicon-chevron-right"></span></a>
+	</td>
+</tr>
+<tr><td colspan="3"></td></tr>
+{% else %}
+<tr class="head">
+	<td class="head-col" colspan="3">
+		<div>
+			<span>第{{item.period.number}}期</span>
+			<span class="pull-right red-color">揭晓时间: {{item.period.kj_time}}</span>
+		</div>
+	</td>
+</tr>
+<tr class="m-history-item">
+	<td class="col-img"><a href="{{url_for('period_detail',pid=item.period.id)}}"><img style="border-radius:0" src="{{item.period.product.thumbnail}}"></a></td>
+	<td class="join-detail">
+		<a href="{{url_for('period_detail',pid=item.period.id)}}">
+			<div class="zj-user">
+				<span class="describe-info">幸运用户: </span><span>{{item.period.zj_user.name}}</span>
+			</div>
+			<div class="user-id">
+				<span><span class="describe-info">用户ID: </span>{{item.period.zj_user.display_id}}(唯一不变的标识)</span>
+			</div>
+			<div class="lucky-num describe-info"><span>幸运号码: <strong>{{item.period.kj_num}}</strong></span></div>
+			<div class="join-info describe-info">
+				<span>参与人次: {{item.count}}人次</span>
+			</div>
+		</a>
+	</td>
+	<td style="font-size:14px;">
+		<a href="{{url_for('period_detail',pid=item.period.id)}}" style="color:#ccc;" href=""><span class="glyphicon glyphicon-chevron-right"></span></a>
+	</td>
+</tr>
+<tr><td colspan="3"></td></tr>
+{% endif %}

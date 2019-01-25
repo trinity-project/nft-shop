@@ -1,0 +1,69 @@
+{{ render_flashed_messages('take-success') }}
+<div class="charge-records">
+    <div class="smallBox">
+        <div>
+            {% for item in records %}
+            <div class="itemBox">
+                <p>{{ item.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                <div  class="">
+                    <div class="clearfix">
+                        <div class="left col-xs-6">
+                            <span>Asset Type:</span> <span class="num">{{item.cate}}</span>
+                        </div>
+                        <div class="right col-xs-6">
+                            <p>
+                                <span>Amount:</span> 
+                                {% if "nft" in item.cate.name.lower() %}
+                                <span>{{item.value|int}}</span>
+                                {% else %}
+                                <span>{{"%.8f"|format(item.value)}}</span>
+                                {% endif %}
+                            </p>
+                            <p>
+                                <span>TxID:</span> 
+                                <span>
+                                        {% if item.status %}完成{% else %}进行中{% endif %}
+                                </span>
+                            </p>
+                            <p></p>                 
+                                <span>Currency rogress:</span> 
+                                <span>
+                                    {% if item.status == 2 %}成功{% else %}进行中{% endif %}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}	
+        </div>
+    </div>
+    <table class="table" id="take_table_2">
+        <thead>
+            <tr>
+                <th id="tr_at">Application Time</th>
+                <th id="tr_ast">Asset Type</th>
+                <th id="tr_cn">Amount</th>
+                <th id="tr_tt">TxID</th>
+                <th id="tr_pd">Status</th>
+            </tr>
+        </thead>
+        <tbody class="cz-body">
+            {% for item in records %}
+
+            <tr>
+                <td style="color:#888;">{{item.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+                <td>{{item.cate}}</td>
+                {% if "nft" in item.cate.name.lower() %}
+                <td><strong>{{item.value|int}}</strong></td>
+                {% else %}
+                <td><strong>{{ "%.8f"|format(item.value) }}</strong></td>
+                {% endif %}
+                <td>{{item.tx_id}}</td>
+                <td style="color:green">{% if item.status == 2 %}Successful{% else %}Underway{% endif %}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

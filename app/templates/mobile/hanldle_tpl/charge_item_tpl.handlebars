@@ -1,0 +1,16 @@
+{{#each data}}
+<li class="item">
+	<div class="charge-count clearfix">
+		<span style="margin-right:15px;">充值金额: <strong>{{this.pay_count}}</strong>元</span>
+		<span>获得夺宝币: <strong>{{this.db_count}}</strong>个</span>
+		<span class="pull-right">{{this.pay_method}}支付</span>
+	</div>
+	<div class="charge-info describe-info clearfix">
+		<span >时间: {{this.created_datetime}}</span>
+		<span class="pull-right">
+			<span>状态: </span>
+			<span style="color:green">{{# if this.status}}成功{{else}}失败{{/if}}</span>
+		</span>
+	</div>
+</li>
+{{/each}}
